@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dept-8002" />
+        <module name="user-8001" />
+        <module name="api" />
+        <module name="Login-10000" />
+        <module name="gateway-9002" />
+        <module name="course-8003" />
+        <module name="community-8004" />
+        <module name="eureka-7001" />
+        <module name="gateway-9001" />
+        <module name="eureka-7002" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="community-10004" target="1.8" />
+      <module name="course-10003" target="1.8" />
+      <module name="dept-8001" target="1.8" />
+      <module name="eureka-11002" target="1.8" />
+      <module name="gateway9002" target="1.8" />
+      <module name="user-13001" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Login-10000" options="" />
+      <module name="mooc-sc" options="" />
+    </option>
+  </component>
+</project>

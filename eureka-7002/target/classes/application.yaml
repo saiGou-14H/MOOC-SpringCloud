@@ -1,0 +1,17 @@
+# 应用服务 WEB 访问端口
+server:
+  port: 7002
+# 应用名称
+spring:
+  application:
+    name: eureka-7002
+# Eureka配置
+eureka:
+  instance:
+    hostname: eureka7002.com # Eureka服务端的实例名称
+  client:
+    register-with-eureka: false # 表示是否向eurekaz注册中心注册自己
+    fetch-registry: false #如果为false，则表示自己为注册中心
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/
+
