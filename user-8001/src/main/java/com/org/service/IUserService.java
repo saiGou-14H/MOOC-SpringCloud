@@ -17,4 +17,6 @@ import java.util.List;
 public interface IUserService extends IService<User> {
 
     public List<User> shUser(User user);
+
+    public boolean udMyself(User user);
 }

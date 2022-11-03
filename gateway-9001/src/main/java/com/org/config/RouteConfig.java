@@ -20,7 +20,7 @@ public class RouteConfig {
                 .route("course-8003-3", r -> r.path("/studentCourse/**").uri("lb://course-8003"))
                 .route("course-8003-4", r -> r.path("/studentPractice/**").uri("lb://course-8003"))
                 .route("course-8003-5", r -> r.path("/practice/**").uri("lb://course-8003"))
-                .route("community-8004", r -> r.path("/community/**").uri("lb://community-8004"))
+                .route("community-8004", r -> r.path("/message/**").uri("lb://community-8004"))
                 .build();
     }
 

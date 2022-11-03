@@ -28,4 +28,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public List<User> shUser(User user) {
         return userMapper.shUser(user);
     }
+
+    @Override
+    public boolean udMyself(User user) {
+        return userMapper.udMyself(user);
+    }
 }

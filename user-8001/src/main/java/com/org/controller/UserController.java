@@ -11,6 +11,7 @@ import com.org.model.Result;
 import com.org.model.User;
 import com.org.service.IUserService;
 import com.org.util.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,7 @@ import java.util.Map;
  * @author B.M
  * @since 2022-10-23
  */
+@Api(value = "用户类")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -46,7 +49,7 @@ public class UserController {
     @Autowired
     private RestTemplate restTemplate;      //提供多种便捷访问远程http服务的方法，简单的Restful服务模板
     //Ribbon,这里的地址应该是一个变量，通过服务器名来访问
-    //private static final String REST_URL_PREFIX = "http://localhost:8001";
+
     private static final String REST_URL_PREFIX_DEPT = "http://DEPT-8002";
     private static final String REST_URL_PREFIX_COURSE = "http://COURSE-8003";
     private static final String REST_URL_PREFIX_COMMUNITY = "http://COMMUNITY-8004";
@@ -56,6 +59,7 @@ public class UserController {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @ApiOperation(value = "登录")
     @PostMapping("/login")
     public Result login(@RequestBody String data) {
         JwtUtil jwtUtil = new JwtUtil();
@@ -91,23 +95,37 @@ public class UserController {
         return Result.success(map);                      //返回结果集
     }
 
-//    @RequestMapping("/searchOne/{deptno}")
-//    public Class searchOne(@PathVariable("deptno") int deptno) {
-//        return restTemplate.getForObject(REST_URL_PREFIX+"/dept/searchOne/"+deptno, Class.class);
-//    }
-    @GetMapping("/searchOne")
-    public Course searchOne(@RequestParam String id, @RequestParam String password) {
-        Map<String, Object> requestmap = new HashMap<>();
-        requestmap.put("id", id);
-        requestmap.put("pasword", password);
-        Course course =  restTemplate.getForObject(REST_URL_PREFIX_COURSE+"/course/searchOne/{id}/{pasword}", Course.class, requestmap);
 
-        return course;
+    /*
+    * add
+    * */
+
+    /*
+     * delete
+     * */
+
+    /*
+     * update
+     * */
+    @ApiOperation(value = "修改个人信息")
+    @PostMapping("/udMyself")
+    public Result udMyself(@RequestBody User user) {
+        if(!userService.udMyself(user)) return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "请检查数据是否有误");
+        return Result.success(HttpStatus.SC_OK, "true");
     }
 
     /*
-    * search
-    * */
+     * search
+     * */
+    @ApiOperation(value = "查询个人信息")
+    @GetMapping("/shMyself")
+    public Result searchOne(HttpServletRequest request) {
+
+        User user = userService.getOne(new QueryWrapper<User>().eq("id", JwtUtil.getId(request)));
+        if(user == null) return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "请检查请求头");
+        return Result.success(HttpStatus.SC_OK, "null", user);
+    }
+
     @ApiOperation(value = "模糊查找学生")
     @PostMapping("/shUser")
     public Result shUser(@RequestBody User user) {

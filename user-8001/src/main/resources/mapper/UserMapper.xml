@@ -2,6 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.UserMapper">
 
+    <!--
+    -add
+    -->
+
+    <!--
+    -delete
+    -->
+
+    <!--
+    -update
+    -->
+    <update id="udMyself" parameterType="com.org.model.User">
+        update `m_user`
+        <set>
+            <if test="username!=null and username!=''">
+                USERNAME = #{username},
+            </if>
+            <if test="password!=null and password!=''">
+                PASSWORD = #{password},
+            </if>
+            <if test="age!=null and age!=''">
+                AGE = #{age},
+            </if>
+            <if test="email!=null and email!=''">
+                EMAIL = #{eamil},
+            </if>
+            <if test="phone!=null and phone!=''">
+                PHONE = #{phone},
+            </if>
+            <if test="position!=null and position!=''">
+                POSITION = #{position},
+            </if>
+            <if test="headPic!=null and headPic!=''">
+                HEAD_PIC = #{headPic},
+            </if>
+            <if test="facePic!=null and facePic!=''">
+                FACE_PIC = #{facePic},
+            </if>
+            <if test="introduction!=null and introduction!=''">
+                INTRODUCTION = #{introduction}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--
+    -search
+    -->
     <!--管理员-模糊查询会议-->
     <select id="shUser" parameterType="com.org.model.User" resultType="com.org.model.User">
         SELECT * FROM `m_user`

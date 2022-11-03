@@ -2,6 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.PracticeMapper">
 
+    <!--
+    -add
+    -->
+
+    <!--
+    -delete
+    -->
+
+    <!--
+    -update
+    -->
+    <!--修改实践-->
+    <update id="udPractice" parameterType="com.org.model.Practice">
+        UPDATE m_practice
+        <set>
+            <if test="name!=null and name!='' ">
+                NAME = #{name},
+            </if>
+            <if test="date!=null and date!='' ">
+                DATE = #{date},
+            </if>
+            <if test="site!=null and site!='' ">
+                SITE = #{site},
+            </if>
+            <if test="content!=null and content!='' ">
+                CONTENT = #{content}
+            </if>
+        </set>
+        where id= #{id}
+    </update>
+
+    <!--
+    -search
+    -->
+    <!--查看实践1-模糊查询-->
     <select id="shPractice1" parameterType="com.org.model.vo.Practice1" resultType="com.org.model.dto.PracticeDTO1">
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
           JOIN `m_course` mc ON mc.id=mp.cou_id
@@ -18,7 +53,7 @@
             </if>
         </where>
     </select>
-
+    <!--查看实践2-使用于课程里查看-->
     <select id="shPractice2" parameterType="HashMap" resultType="com.org.model.dto.PracticeDTO1">
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
         JOIN `m_course` mc ON mc.id=mp.cou_id
@@ -32,7 +67,7 @@
             </if>
         </where>
     </select>
-
+    <!--查看实践3-适用与实践管理-->
     <select id="shPractice3" parameterType="long" resultType="com.org.model.dto.PracticeDTO1">
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
         JOIN `m_course` mc ON mc.id=mp.cou_id

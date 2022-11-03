@@ -14,6 +14,24 @@
     -update
     -->
     <!--修改实践-->
+    <update id="udPractice" parameterType="com.org.model.Practice">
+        UPDATE m_practice
+        <set>
+            <if test="name!=null and name!='' ">
+                NAME = #{name},
+            </if>
+            <if test="date!=null and date!='' ">
+                DATE = #{date},
+            </if>
+            <if test="site!=null and site!='' ">
+                SITE = #{site},
+            </if>
+            <if test="content!=null and content!='' ">
+                CONTENT = #{content}
+            </if>
+        </set>
+        where id= #{id}
+    </update>
 
     <!--
     -search

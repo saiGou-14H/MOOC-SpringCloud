@@ -19,4 +19,6 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     public List<User> shUser(User user);
+
+    public boolean udMyself(User user);
 }
