@@ -1,0 +1,53 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: gateway-9002
+  redis:
+    port: 6379
+    host: 175.178.189.140
+    password: saiGou_70852096
+  datasource: # Mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:p6spy:mysql://175.178.189.140:3306/myapp?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    username: rjbf4
+    password: 123456
+  cloud:
+    gateway:
+      enabled: true # 只要加了依赖，默认开启
+      routes:         # 动态路由，lb自动轮询
+        - id: user-8001  # 路由id，保持唯一即可
+          uri: lb://user-8001    # uri统一资源标识符，url统一资源定位符
+          predicates:
+            - Path=/user/**
+        - id: dept-8002  # 路由id，保持唯一即可
+          uri: lb://dept-8002
+          predicates:
+            - Path=/dept/**
+        - id: course-8003  # 路由id，保持唯一即可
+          uri: lb://course-8003    # uri统一资源标识符，url统一资源定位符
+          predicates:
+            - Path=/course/**
+        - id: community-8004  # 路由id，保持唯一即可
+          uri: lb://community-8004
+          predicates:
+            - Path=/community/**
+      discovery:
+        locator:
+          enabled: true     # 开启动态路由、通用应用名称，找到服务的功能
+          lower-case-service-id: true # 开启服务名称小写
+
+# Eureka的配置，服务注册到哪里
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/
+    registry-fetch-interval-seconds: 3    # 网关拉去服务列表的时间缩短
+  intstance:
+    instance-id: gateway-9002
+    prefer-ip-address: true # 显示服务的ip地址
+
+
+
+
+
