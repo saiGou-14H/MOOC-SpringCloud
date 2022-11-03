@@ -72,9 +72,6 @@ public class Course implements Serializable {
     @TableField("version")
     @Version
     private Integer version;
-    
-    @ApiModelProperty("课程推荐数")
-    @TableField("reco_num")
-    private Integer recoNum;
+
 
 }
