@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ClassMapper">
+
+    <resultMap id="ClassMap" type="com.org.model.Class">
+        <id column="ID" property="id"/>
+        <result column="NAME" property="name"/>
+        <result column="EMAIL" property="numbers"/>
+        <result column="EMAIL" property="introduction"/>
+
+        <!--一对多的关联-->
+        <collection property="courses" ofType="com.org.model.Course" select="shAllStudent" column="ID">
+            <result property="id" column="ID"/>
+            <result property="name" column="NAME"/>
+            <result property="tea_id" column="TEA_ID"/>
+            <result property="cou_type" column="COU_TYPE"/>
+            <result property="integral" column="INTEGRAL"/>
+            <result property="introduction" column="INTRODUCTION"/>
+            <result property="cata_num" column="CATE_NUM"/>
+            <result property="coll_num" column="COLL_NUM"/>
+            <result property="reco_num" column="RECO_NUM"/>
+        </collection>
+    </resultMap>
+
+    <!--
+    add
+    -->
+
+    <!--
+    delete
+    -->
+
+    <!--
+    update
+    -->
+    <!--修改班级-->
+    <update id="updateCourse" parameterType="com.org.model.Class">
+        UPDATE m_class
+        <set>
+            <if test="name != null and name != '' ">
+                NAME = #{name},
+            </if>
+            <if test="numbers != 0">
+                NUMBERS = #{numbers},
+            </if>
+            <if test="introduction != null and introduction != '' ">
+                INTRODUCTION = #{introduction}
+            </if>
+        </set>
+        where id= #{id}
+    </update>
+
+    <!--
+    search
+    ->
+    <!-查询班级-->
+    <select id="shClass" parameterType="long" resultMap="ClassMap">
+        select * from m_class where id = #{id}
+    </select>
+
+    <!--查询所有关联班级的学生-->
+    <select id="shAllStudent" parameterType="long" resultType="com.org.model.Course">
+        select mco.id, mco.name, mco.tea_id, mco.cou_type, mco.integral,
+               mco.introduction, mco.cata_num, mco.coll_num, mco.reco_num
+        from m_course mco
+                 JOIN m_class_course mcc
+                      ON mco.ID = mcc.COU_ID
+                 JOIN m_class mc
+                      ON  mc.ID = mcc.CLASS_ID
+        WHERE mc.ID = #{id}
+    </select>
+
+</mapper>

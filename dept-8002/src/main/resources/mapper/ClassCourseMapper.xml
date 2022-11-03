@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ClassCourseMapper">
+
+    <!--查询班级所有关联的课程id-->
+    <select id="shCourses" parameterType="long" resultType="string">
+        SELECT cou_id FROM `m_class_course`
+        WHERE class_id = #{cla_id}
+    </select>
+
+    <!--查询班级关联的课程的实践id-->
+    <select id="shCoursesPra" parameterType="long" resultType="string">
+        select mp.id from `m_practice` mp
+              JOIN m_course mc
+                   ON mp.cou_id = mc.id
+              JOIN m_class_course mcc
+                   ON  mc.ID = mcc.cou_id
+              JOIN m_class mcl
+                   ON  mcc.class_id = mcl.id
+        WHERE mcl.id = #{cla_id}
+    </select>
+
+</mapper>

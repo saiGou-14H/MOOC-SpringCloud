@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.PracticeMapper">
+
+    <!--
+    -add
+    -->
+
+    <!--
+    -delete
+    -->
+
+    <!--
+    -update
+    -->
+    <!--修改实践-->
+
+    <!--
+    -search
+    -->
+    <!--查看实践1-模糊查询-->
+    <select id="shPractice1" parameterType="com.org.model.vo.Practice1" resultType="com.org.model.dto.PracticeDTO1">
+        SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
+          JOIN `m_course` mc ON mc.id=mp.cou_id
+          JOIN `m_user` mu ON mu.id=mp.tea_id
+        <where>
+            <if test="couName!=null and couName!=''">
+                mc.name LIKE CONCAT('%',#{couName},'%')
+            </if>
+            <if test="praName!=null and praName!=''">
+                AND mp.name LIKE CONCAT('%',#{praName},'%')
+            </if>
+            <if test="tea_id!=null and tea_id!=''">
+                AND mp.tea_id = #{tea_id}
+            </if>
+        </where>
+    </select>
+    <!--查看实践2-使用于课程里查看-->
+    <select id="shPractice2" parameterType="HashMap" resultType="com.org.model.dto.PracticeDTO1">
+        SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
+        JOIN `m_course` mc ON mc.id=mp.cou_id
+        JOIN `m_user` mu ON mu.id=mp.tea_id
+        <where>
+            <if test="cou_id!=null and cou_id!=''">
+                mc.id = #{cou_id}
+            </if>
+            <if test="tea_id!=null and tea_id!=''">
+                AND mp.tea_id = #{tea_id}
+            </if>
+        </where>
+    </select>
+    <!--查看实践3-适用与实践管理-->
+    <select id="shPractice3" parameterType="long" resultType="com.org.model.dto.PracticeDTO1">
+        SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
+        JOIN `m_course` mc ON mc.id=mp.cou_id
+        JOIN `m_user` mu ON mu.id=mp.tea_id
+        where mp.tea_id = #{tea_id}
+    </select>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.UserMapper">
+
+    <!--管理员-模糊查询会议-->
+    <select id="shUser" parameterType="com.org.model.User" resultType="com.org.model.User">
+        SELECT * FROM `m_user`
+        <where>
+            <if test="id!=null and id!=''">
+                id LIKE CONCAT('%',#{id},'%') <!--连接字符串-->
+            </if>
+            <if test="username!=null and username!=''">
+                AND username LIKE CONCAT('%',#{username},'%') <!--连接字符串-->
+            </if>
+        </where>
+    </select>
+
+</mapper>

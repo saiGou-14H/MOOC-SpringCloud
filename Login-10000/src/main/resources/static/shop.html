@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+      const purchase = () => {
+        const shopNum = document.getElementsByClassName("num")
+        const list = document.getElementById("list")
+        const car = document.getElementById("car")
+        const aa = document.getElementsByClassName("price")
+        list.style.display = "none"
+        car.style.display = "flex"
+        aa[0].textContent = `￥${shopNum[0].value*100}`
+        aa[1].textContent = `￥${shopNum[1].value*100}`
+        aa[2].textContent = `￥${shopNum[2].value*100}`
+        aa[3].textContent = `￥${shopNum[0].value*100+shopNum[1].value*100+shopNum[2].value*100}`
+      }
+    </script>
+</head>
+<body>
+
+  <div class="flex justify-center" id="list">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+      <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">商品清单</h5>
+        <div class="flex items-center justify-center mt-2 shop-name">
+          🎂香草蛋糕<div>&nbsp;&nbsp;￥100&nbsp;&nbsp;</div>
+          <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
+            <input type="number" value="0" min="0" class="num block w-20 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+          </div>
+        </div>
+        <div class="flex items-center justify-center mt-2 shop-name">
+          🍪曲奇饼干<div>&nbsp;&nbsp;￥100&nbsp;&nbsp;</div>
+          <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
+            <input type="number" value="0" min="0" class="num block w-20 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+          </div>
+        </div>
+        <div class="flex items-center justify-center mt-2 shop-name">
+          🍬魔法糖果<div>&nbsp;&nbsp;￥100&nbsp;&nbsp;</div>
+          <div class="inline-flex shadow-md hover:shadow-lg focus:shadow-lg" role="group">
+            <input type="number" value="0" min="0" class="num block w-20 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" />
+          </div>
+        </div>
+        <div class="flex space-x-2 justify-center mt-2">
+          <button type="button" onclick="purchase()" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">购买</button>
+        </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="flex justify-center" id="car" style="display:none">
+    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm" id="aa">
+      <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">购物车</h5>
+      <div class="flex items-center justify-center mt-2 shop-name">
+        🎂香草蛋糕&nbsp;&nbsp;<div class="price">￥100</div>&nbsp;&nbsp;
+      </div>
+      <div class="flex items-center justify-center mt-2 shop-name">
+        🍪曲奇饼干&nbsp;&nbsp;<div class="price">￥100</div>&nbsp;&nbsp;
+      </div>
+      <div class="flex items-center justify-center mt-2 shop-name">
+        🍬魔法糖果&nbsp;&nbsp;<div class="price">￥100</div>&nbsp;&nbsp;
+      </div>
+      <div class="flex items-center justify-center mt-2 shop-name">
+        合计<div class="price">&nbsp;&nbsp;￥300&nbsp;&nbsp;</div>
+      </div>
+      <div class="flex space-x-2 justify-center mt-2">
+        <button type="button" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">购买</button>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

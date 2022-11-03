@@ -1,0 +1,84 @@
+<html>
+<head>
+  <link href="cjj/tailwind" rel="stylesheet">
+  <title>注册</title>
+  <script>
+    function vali() {
+      const email = document.getElementById("emailInput").value
+      const pwd = document.getElementById("pwdInput").value
+      const pwd2 = document.getElementById("pwdConfirm").value
+      console.log(email,pwd,pwd2)
+      if(pwd !== pwd2) {
+        alert("两次输入的密码不一致！");
+        return false;
+      }
+      if(!/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(email)) {
+        alert("非法邮箱");
+        return false;
+      }
+      if(!/^.*(?=.{8,16})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/.test(pwd)) {
+        alert("密码的强度必须是包含大小写字母和数字的组合，不能使用特殊字符，长度在8-16之间。")
+        return false;
+      }
+      location.href = "cjj/home"
+    }
+
+  </script>
+</head>
+<body>
+<section class="h-screen">
+  <div class="px-6 h-full text-gray-800">
+    <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6" >
+      <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+        <div class="flex justify-center">
+          <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
+            <h1 class="text-gray-900 text-4xl mb-4 mt-4 flex justify-center">注册</h1>
+            <form action="/api/user/register" id="regForm" method="post">
+              <!-- Email input -->
+              <div class="mb-6">
+                <input
+                  type="text"
+                  name="email"
+                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="emailInput"
+                  placeholder="邮箱"
+                />
+              </div>
+              <!-- Password input -->
+              <div class="mb-6">
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="pwdInput"
+                  placeholder="密码"
+                />
+              </div>
+              <!-- Password confirm -->
+              <div class="mb-6">
+                <input
+                  type="password"
+                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  id="pwdConfirm"
+                  placeholder="再次输入密码"
+                />
+              </div>
+              <div class="text-center lg:text-left">
+                <input type="button" onclick="return vali()" value="注册"
+                  class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                />
+              </div>
+              <div class="text-center lg:text-left mt-10">
+                <input type="button" onclick="location.href = 'cjj/login'" value="前往登录（第二次作业）"
+                  class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

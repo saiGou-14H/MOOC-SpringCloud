@@ -1,0 +1,43 @@
+server:
+  port: 10000
+
+spring:
+
+  datasource:
+    username: rjbf4
+    password: 123456
+    url: jdbc:mysql://175.178.189.140:3306/myapp?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+  redis: # redis
+    port: 6379
+    host: 175.178.189.140
+    password: saiGou_70852096
+  thymeleaf:
+    prefix: classpath:/static/
+    suffix: .html
+    cache: false #关闭缓存
+  zipkin:
+    base-url: http://localhost:9411
+    sleuth:
+      sampler:
+        probability: 0.1  # 配置采样率，默认的采样比例为0.1，即10%，1表示全部采集
+        rate: 10  # 为了使用速率限制采样器，选择每秒间隔接收的trace量，最小数字为0，最大为2147483647
+# mybatis-plus
+mybatis-plus:
+  global-config:
+    db-config:
+      # logic-delete-field: flag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  type-aliases-package: com.org.model
+  #日志,系统默认
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Eureka的配置，服务注册到哪里
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/
+  intstance:
+    instance-id: sc-provider-staff8002
+    prefer-ip-address: true # 显示服务的ip地址
