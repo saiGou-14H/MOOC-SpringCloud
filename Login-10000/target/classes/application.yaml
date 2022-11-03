@@ -39,5 +39,5 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/
   intstance:
-    instance-id: sc-provider-staff8002
+    instance-id: Login-10000
     prefer-ip-address: true # 显示服务的ip地址

@@ -6,8 +6,8 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
-@EnableEurekaClient     //在服务启动后自动注册到Eureka中
-@EnableCircuitBreaker   //添加对服务熔断的支持
+//@EnableEurekaClient     //在服务启动后自动注册到Eureka中
+//@EnableCircuitBreaker   //添加对服务熔断的支持
 public class Course8003Application {
 
     public static void main(String[] args) {

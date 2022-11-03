@@ -21,6 +21,9 @@ public class RouteConfig {
                 .route("course-8003-4", r -> r.path("/studentPractice/**").uri("lb://course-8003"))
                 .route("course-8003-5", r -> r.path("/practice/**").uri("lb://course-8003"))
                 .route("community-8004", r -> r.path("/community/**").uri("lb://community-8004"))
+                .route("student-study-8013", r -> r.path("/app/**").uri("lb://student-study-8013"))
+                .route("student-study-8013", r -> r.path("/App/**").uri("lb://student-study-8013"))
+                .route("student-study-8013", r -> r.path("/run/**").uri("lb://student-study-8013"))
                 .build();
     }
 

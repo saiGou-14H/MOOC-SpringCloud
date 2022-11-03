@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class MStudentPractice implements Serializable {
      * 报名时间
      */
     @TableField("pra_date")
-    private String praDate;
+    private LocalDateTime praDate;
 
 
 }

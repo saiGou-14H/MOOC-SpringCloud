@@ -18,4 +18,4 @@ public enum ServerResponseEnum {
         ;
         Integer code;
         String message;
-        }
+}

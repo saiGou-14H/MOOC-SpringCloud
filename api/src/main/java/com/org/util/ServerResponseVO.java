@@ -36,6 +36,17 @@ public class ServerResponseVO<T> implements Serializable {
         this.message = message;
     }
 
+
+
+
+    public static <T> ServerResponseVO massage(boolean a,T success,T err) {
+        if(a){
+            return new ServerResponseVO<>(ServerResponseEnum.SUCCESS, success);
+        }else {
+            return new ServerResponseVO<>(ServerResponseEnum.ERROR, err);
+        }
+    }
+
     /**
      * 返回成功信息
      *

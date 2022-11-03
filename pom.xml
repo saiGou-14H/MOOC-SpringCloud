@@ -19,6 +19,7 @@
         <module>gateway-9002</module>
         <module>user-8001</module>
         <module>Login-10000</module>
+        <module>student-study-8013</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

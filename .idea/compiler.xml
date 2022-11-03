@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="dept-8002" />
+        <module name="student-study-8013" />
         <module name="user-8001" />
         <module name="api" />
         <module name="Login-10000" />
