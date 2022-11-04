@@ -1,9 +1,7 @@
 package com.org.model;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
@@ -65,5 +63,9 @@ public class Message implements Serializable {
     @TableField("comment_num")
     private Integer commentNum;
 
+    @ApiModelProperty("是否删除")
+    @TableField("deleted")
+    @TableLogic
+    private Boolean deleted;
 
 }

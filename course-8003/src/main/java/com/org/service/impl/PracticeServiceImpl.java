@@ -28,6 +28,11 @@ public class PracticeServiceImpl extends ServiceImpl<PracticeMapper, Practice> i
     PracticeMapper practiceMapper;
 
     @Override
+    public List<String> shPracticeIds(Long course) {
+        return practiceMapper.shPracticeIds(course);
+    }
+
+    @Override
     public List<PracticeDTO1> shPractice1(Practice1 practice1) {
         return practiceMapper.shPractice1(practice1);
     }

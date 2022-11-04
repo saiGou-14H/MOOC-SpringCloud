@@ -26,4 +26,6 @@ public interface IPracticeService extends IService<Practice> {
     public List<Practice> shPractice3(Long tea_id);
 
     public boolean udPractice(Practice practice);
+
+    public List<String> shPracticeIds(Long course);
 }

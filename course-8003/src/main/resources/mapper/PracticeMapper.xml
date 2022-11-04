@@ -36,6 +36,10 @@
     <!--
     -search
     -->
+    <!--查询单个课程的全部实践-->
+    <select id="shPracticeIds" parameterType="long" resultType="string">
+        SELECT id FROM `m_practice` WHERE cou_id = #{course}
+    </select>
     <!--查看实践1-模糊查询-->
     <select id="shPractice1" parameterType="com.org.model.vo.Practice1" resultType="com.org.model.dto.PracticeDTO1">
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp

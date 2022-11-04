@@ -1,12 +1,18 @@
 package com.org.controller;
 
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.org.model.Practice;
 import com.org.model.Result;
 import com.org.model.StudentCourse;
 import com.org.model.StudentPractice;
+import com.org.service.IPracticeService;
+import com.org.service.IStudentCourseService;
 import com.org.service.IStudentPracticeService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,9 +39,11 @@ public class StudentPracticeController {
     private RestTemplate restTemplate;      //提供多种便捷访问远程http服务的方法，简单的Restful服务模板
 
     @Autowired
+    private IStudentCourseService studentCourseService;
+    @Autowired
     private IStudentPracticeService studentPracticeService;
-//    @Autowired
-//    private IStudentClass
+    @Autowired
+    private IPracticeService practiceService;
     private static final String REST_URL_PREFIX_DEPT = "http://DEPT-8002";
 
     /*
@@ -92,6 +97,32 @@ public class StudentPracticeController {
     /*
     * delete
     * */
+    @ApiOperation(value = "删除学生与各课程实践")
+    @PostMapping("/delStuPra/{stu_id}")
+    public Result delStuPra(@PathVariable Long stu_id, @RequestBody List<String> couIds) throws InterruptedException {
+        //迭代每门课程
+        Iterator<String> it1 = couIds.iterator();
+        while(it1.hasNext()) {
+            Long course = Long.parseLong(it1.next());
+            //查找每门课程的所有实践
+            List<String> praIds = practiceService.shPracticeIds(course);
+            //如果有实践就遍历删除
+            if(!praIds.isEmpty()) {
+                Iterator<String> it2 = praIds.iterator();
+                //迭代每个实践
+                while(it2.hasNext()) {
+                    Long practice = Long.parseLong(it2.next());
+                    //一个个封装成对象然后删除
+                    studentPracticeService.remove(new QueryWrapper<StudentPractice>().eq("stu_id", stu_id).eq("pra_id", practice));
+                    Thread.sleep(10);
+                }
+            }
+            //最后删除学生与课程实践关联
+            studentCourseService.remove(new QueryWrapper<StudentCourse>().eq("stu_id", stu_id).eq("cou_id", course));
+        }
+        return Result.success(HttpStatus.SC_OK, "true");
+    }
+
 
     /*
      * update

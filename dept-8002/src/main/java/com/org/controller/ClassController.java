@@ -17,6 +17,8 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -53,6 +55,9 @@ public class ClassController {
     private static final String REST_URL_PREFIX_COURSE = "http://COURSE-8003";
     private static final String REST_URL_PREFIX_COMMUNITY = "http://COMMUNITY-8004";
 
+    /*
+    * add
+    * */
     @ApiOperation(value = "创建班级")
     @PostMapping("/ctClass")
     @HystrixCommand(fallbackMethod = "hystrixCtClass")                    //
@@ -101,6 +106,31 @@ public class ClassController {
         return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "请检查数据或请求头");
     }
 
+    /*
+     *delete
+     * */
+    @ApiOperation(value = "移除学生")
+    @PostMapping("/delStuFromClass/{cla_id}/{stu_id}")
+    public Result delStuFromClass(@PathVariable Long cla_id, @PathVariable Long stu_id) {
+        //查询班级所有关联的课程id
+        List<String> couIds = classCourseService.shCourses(cla_id);
+        //如果课程不为空
+        if(!couIds.isEmpty()) {
+            //删除学生与课程实践关联
+            Result r1 = restTemplate.postForObject(REST_URL_PREFIX_COURSE + "/studentPractice/delStuPra/" + stu_id, couIds, Result.class);
+            if(r1.getCode() == HttpStatus.SC_OK) {
+
+                return Result.success(HttpStatus.SC_OK, "true");
+            }
+        }
+        //否则就直接移除这个学生
+        return Result.success(HttpStatus.SC_INTERNAL_SERVER_ERROR, "false");
+    }
+
+
+    /*
+     *update
+     * */
     @ApiOperation(value = "修改班级")
     @PostMapping("/upClass")
     //@HystrixCommand(fallbackMethod = "hystrixUpClass")                    //
