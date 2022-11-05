@@ -5,9 +5,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.org.entity.Aut;
 import com.org.entity.MUser;
-import com.org.login10000.config.utils.JwtUtil;
 import com.org.login10000.service.AutService;
 import com.org.login10000.service.IUserService;
+import com.org.util.JwtUtil;
 import com.org.util.ServerResponseEnum;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class login {
         MUser user = iUserService.getOne(wrapper);
         if(user!=null){
             System.out.println(user);
-            String newToken = JwtUtil.createToken(id, user.getUsername(), user.getRole());//创建一个token
+            String newToken = JwtUtil.createToken(Long.valueOf(id), user.getUsername(), user.getRole());//创建一个token
             //存储用户数据
             Map<String, Object> map = new HashMap<>();
             map.put("staffno", id);
@@ -90,7 +90,7 @@ public class login {
             MUser user = iUserService.getOne(wrapper);
             if(user!=null){
                 System.out.println(user);
-                String newToken = JwtUtil.createToken(id, user.getUsername(), user.getRole());//创建一个token
+                String newToken = JwtUtil.createToken(Long.valueOf(id), user.getUsername(), user.getRole());//创建一个token
                 //存储用户数据
                 Map<String, Object> map = new HashMap<>();
                 map.put("staffno", id);

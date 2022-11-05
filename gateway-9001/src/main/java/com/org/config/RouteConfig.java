@@ -24,6 +24,7 @@ public class RouteConfig {
                 .route("student-study-8013", r -> r.path("/app/**").uri("lb://student-study-8013"))
                 .route("student-study-8013", r -> r.path("/App/**").uri("lb://student-study-8013"))
                 .route("student-study-8013", r -> r.path("/run/**").uri("lb://student-study-8013"))
+                .route("student-find-8089", r -> r.path("/find/**").uri("lb://student-find-8089"))
                 .build();
     }
 

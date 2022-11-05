@@ -8,6 +8,7 @@ import com.org.util.ServerResponseEnum;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,22 +27,20 @@ public class SStudentPracticeController {
         Long StuId = JwtUtil.getId(request);
         QueryWrapper<MStudentPractice> qw =new QueryWrapper<>();
         qw.eq("stu_id",StuId);
-        return ServerResponseVO.success(isStudentPracticeService.getOne(qw));
+        return ServerResponseVO.success(isStudentPracticeService.list(qw));
     }
 
     //学生报名实践
-    @RequestMapping("adPractice/{praid}")
-    public ServerResponseVO adPractice(HttpServletRequest request, @PathVariable Long praid){
+    @RequestMapping("adPractice")
+    public ServerResponseVO adPractice(HttpServletRequest request,@RequestBody MStudentPractice mStudentPractice){
         Long StuId = JwtUtil.getId(request);
+        System.out.println(mStudentPractice.getPraDate());
+        mStudentPractice.setStuId(StuId);
         QueryWrapper<MStudentPractice> qw = new QueryWrapper<>();
-        qw.eq("stu_id",StuId).eq("pra_id",praid);
+        qw.eq("stu_id",StuId).eq("pra_id",mStudentPractice.getPraId());
         if(isStudentPracticeService.getOne(qw)!=null){
             return ServerResponseVO.massage(false,"","添加实践失败，已报名该实践");
         }
-        MStudentPractice mStudentPractice = new MStudentPractice();
-        mStudentPractice.setStuId(StuId);
-        mStudentPractice.setPraId(praid);
-        mStudentPractice.setPraDate(LocalDateTime.now());
         return ServerResponseVO.massage(isStudentPracticeService.save(mStudentPractice),"报名实践成功","报名实践失败");
     }
 

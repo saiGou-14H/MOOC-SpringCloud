@@ -10,43 +10,43 @@ import java.io.Serializable;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author Jie
- * @since 2022-10-23
+ * @since 2022-11-07
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@TableName("aut")
+        @EqualsAndHashCode(callSuper = false)
+        @TableName("aut")
 public class Aut implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 
-    @TableId("id")
-    private Long id;
+                                        @TableId("id")
+                                            private Long id;
 
-    /**
-     * 雪花ID
-     */
-    @TableField("aut_id")
-    private Long autId;
+                        /**
+         * 雪花ID
+         */
+                    @TableField("aut_id")
+                            private Long autId;
 
-    @TableField("email")
-    private String email;
+                @TableField("email")
+                            private String email;
 
-    @TableField("password")
-    private String password;
+                @TableField("password")
+                            private String password;
 
-    @TableField("username")
-    private String username;
+                @TableField("username")
+                            private String username;
 
-    /**
-     * 绑定微信授权
-     */
-    @TableField("openid")
-    private String openid;
+                        /**
+         * 绑定微信授权
+         */
+                    @TableField("openid")
+                            private String openid;
 
 
-}
+        }
 

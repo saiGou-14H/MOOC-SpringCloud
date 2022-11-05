@@ -47,5 +47,10 @@ public class SCourseController {
         return ServerResponseVO.success(iCourseService.page(page,qw).getRecords());
     }
 
+    //根据班级查询课程
+    @RequestMapping("shCourse/{classid}")
+    public ServerResponseVO getCourseByClassId(@PathVariable Long classid){
+        return ServerResponseVO.success(iCourseService.getCourseByClassId(classid));
+    }
 
 }

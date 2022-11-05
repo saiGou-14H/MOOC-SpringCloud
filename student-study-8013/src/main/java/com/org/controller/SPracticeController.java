@@ -23,7 +23,7 @@ public class SPracticeController {
         return ServerResponseVO.success(isPracticeService.getOne(qw));
     }
 
-    //工具课程ID查询课程的实践信息
+    //根据程ID查询课程的实践信息
     @RequestMapping("shPracticeByCouserId/{couid}")
     public ServerResponseVO shPracticeByCouserId(@PathVariable Long couid){
         QueryWrapper<MPractice> qw = new QueryWrapper<>();
