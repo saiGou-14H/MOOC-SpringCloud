@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ISStudentCourseMapper">
+    <!--查询课程-->
+    <select id="getHaveCourseList" parameterType="Long" resultType="com.org.entity.MCourse">
+        SELECT
+            m_course.*
+        FROM
+            m_student_course
+                INNER JOIN
+            m_course
+            ON
+                        m_student_course.cou_id = m_course.id AND
+                        m_student_course.cou_id = m_course.id
+                INNER JOIN
+            m_user
+            ON
+                m_user.id = m_student_course.stu_id
+        WHERE
+            m_user.id = m_student_course.stu_id AND
+            m_student_course.cou_id = m_course.id AND
+                m_course.id NOT IN ((SELECT
+                                         m_course.id
+                                     FROM
+                                         m_course
+                                             INNER JOIN
+                                         m_class_course
+                                         ON
+                                             m_course.id = m_class_course.cou_id,
+                                         m_student_class
+                                             INNER JOIN
+                                         m_user
+                                         ON
+                                             m_student_class.stu_id = m_user.id
+                                     WHERE
+                                         m_class_course.cou_id = m_course.id AND
+                                         m_student_class.class_id = m_class_course.class_id
+                                       AND
+                                         m_user.id = m_student_class.stu_id
+                                       AND
+                                         m_user.id = #{id}))
+    </select>
+
+
+</mapper>

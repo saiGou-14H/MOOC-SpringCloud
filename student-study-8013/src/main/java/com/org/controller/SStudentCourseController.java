@@ -118,4 +118,9 @@ public class SStudentCourseController {
         mStudentCourse.setComment(comment);
         return ServerResponseVO.success(isStudentCourseService.save(mStudentCourse));
     }
+    @RequestMapping("shHaveCourse")
+    public ServerResponseVO getHaveCourseList(HttpServletRequest request){
+        Long stuId = JwtUtil.getId(request);
+        return ServerResponseVO.success(isStudentCourseService.getHaveCourseList(stuId));
+    }
 }

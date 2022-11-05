@@ -45,20 +45,5 @@ public class demo1 {
         }
         return courseTypeResponseResponseEntity;
     }
-    @RequestMapping("2/{id}")
-    public ResponseEntity<CourseTypeResponse> get2(HttpServletRequest request, @PathVariable Long id){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", request.getHeader("Authorization"));
-        //封装请求头
-        HttpEntity<Map<String, Object>> formEntity = new HttpEntity<Map<String, Object>>(headers);
 
-        ResponseEntity<CourseTypeResponse> courseTypeResponseResponseEntity = restTemplate.postForEntity("http://STUDENT-STUDY-8013/app/course/type/shTypeById/"+id,formEntity,CourseTypeResponse.class);
-        Integer parentId = (Integer) courseTypeResponseResponseEntity.getBody().getData().getParentId();
-        if(parentId!=null){
-            ResponseEntity<CourseTypeResponse> a = restTemplate.postForEntity("http://STUDENT-STUDY-8013/run/2/"+parentId,formEntity,CourseTypeResponse.class);
-            System.out.println(a.getBody().getData());
-            courseTypeResponseResponseEntity.getBody().getData().setParent((a.getBody().getData()));
-        }
-        return courseTypeResponseResponseEntity;
-    }
 }

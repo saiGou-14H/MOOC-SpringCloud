@@ -25,6 +25,18 @@ public class SCourseTypeController {
         return ServerResponseVO.success(isCourseTypeService.getOne(qw));
     }
 
+    @RequestMapping("shChileTypeByPraId/{id}")
+    public ServerResponseVO shChileTypeByPraId(@PathVariable long id){
+        QueryWrapper<MCourseType> qw = new QueryWrapper<>();
+        qw.eq("parent_id",id);
+        return ServerResponseVO.success(isCourseTypeService.list(qw));
+    }
+
+    @RequestMapping("shMaxType")
+    public ServerResponseVO shMaxType(){
+        return ServerResponseVO.success(isCourseTypeService.shMaxType());
+    }
+
     @RequestMapping("shTypeByType")
     public ServerResponseVO shTypeByName(@RequestBody String body){
         JSONObject jsonObject = JSON.parseObject(body);

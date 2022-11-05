@@ -1,5 +1,6 @@
 package com.org.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.org.entity.MStudentCourse;
 import com.org.entity.MStudentCourseCart;
 import com.org.service.ISCourseCarService;
@@ -32,5 +33,14 @@ public class SCourseCarController {
         mStudentCourseCart.setCouId(courseid);
         mStudentCourseCart.setAddTime(LocalDateTime.now());
         return ServerResponseVO.massage(isCourseCarService.save(mStudentCourseCart),"加入购物车成功","加入购物车失败");
+    }
+
+    //将课程加入购物车
+    @RequestMapping("shCourse")
+    public ServerResponseVO shCourseInCar(HttpServletRequest request){
+        Long stuId = JwtUtil.getId(request);
+        QueryWrapper<MStudentCourseCart> qw = new QueryWrapper<>();
+        qw.eq("stu_id",stuId);
+        return ServerResponseVO.success(isCourseCarService.list(qw));
     }
 }
