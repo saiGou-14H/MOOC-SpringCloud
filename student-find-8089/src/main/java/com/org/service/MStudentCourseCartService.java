@@ -3,7 +3,7 @@ package com.org.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.org.entity.MStudentCourseCart;
-import com.org.entity.vo.StudentCourseCartVo;
+import com.org.entity.vo.StudentCourseCartVO;
 
 import java.util.List;
 
@@ -17,6 +17,6 @@ import java.util.List;
  * @since 2022-10-23
  */
 public interface MStudentCourseCartService extends IService<MStudentCourseCart> {
-    List<StudentCourseCartVo> searchStudentCourseCart(Long userId, Long start, Long end);
+    List<StudentCourseCartVO> searchStudentCourseCart(Long userId, Long start, Long end);
 }
 

@@ -3,7 +3,6 @@ package com.org.entity.vo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Author Jie
@@ -48,7 +47,7 @@ public class QuestionAnswerPageVO implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private String createTime;
 
     /**
      * 0问题/1回复

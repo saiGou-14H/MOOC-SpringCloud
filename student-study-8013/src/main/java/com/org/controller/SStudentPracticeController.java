@@ -52,4 +52,13 @@ public class SStudentPracticeController {
         qw.eq("stu_id",StuId).eq("pra_id",praid);
         return ServerResponseVO.massage(isStudentPracticeService.remove(qw),"取消实践成功","取消实践失败");
     }
+
+    //学生查询实践
+    @RequestMapping("shPractice/{praid}")
+    public ServerResponseVO shPractice(HttpServletRequest request, @PathVariable Long praid){
+        Long StuId = JwtUtil.getId(request);
+        QueryWrapper<MStudentPractice> qw = new QueryWrapper<>();
+        qw.eq("stu_id",StuId).eq("pra_id",praid);
+        return ServerResponseVO.success(isStudentPracticeService.getOne(qw));
+    }
 }

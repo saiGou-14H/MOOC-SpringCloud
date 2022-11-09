@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.org.entity.MQuestionComment;
 import com.org.entity.vo.MQuestionCommentVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ import java.util.List;
  */
 @Mapper
 public interface MQuestionCommentMapper extends BaseMapper<MQuestionComment> {
-    public List<MQuestionCommentVO> searchMQuestionCommentBy(Integer questionId);
+    public List<MQuestionCommentVO> searchMQuestionCommentBy(@Param("questionId")Integer questionId);
 }
 

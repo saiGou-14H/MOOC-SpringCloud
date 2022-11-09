@@ -8,6 +8,7 @@ import com.github.yitter.idgen.YitIdHelper;
 import com.org.entity.MQuestionAnswer;
 import com.org.entity.vo.QuestionAnswerPageVO;
 import com.org.service.MQuestionAnswerService;
+import com.org.util.JwtUtil;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +38,8 @@ public class MQuestionAnswerController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/searchMQuestionAnswerByPage")
     public ServerResponseVO searchMQuestionAnswerByPage(HttpServletRequest request, HttpServletResponse response,
-                                                 @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
-                                                 @RequestParam(name = "pageSize", defaultValue = "5") int pageSize) {
+                                                        @RequestParam(name = "pageNum", defaultValue = "1") int pageNum,
+                                                        @RequestParam(name = "pageSize", defaultValue = "5") int pageSize) {
         List<QuestionAnswerPageVO> messagePageVOList = mQuestionAnswerService.searchmQuestionAnswerByPage((pageNum - 1) * pageSize, pageSize);
         return ServerResponseVO.success(messagePageVOList);
     }
@@ -49,7 +50,7 @@ public class MQuestionAnswerController {
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public String add(@RequestBody MQuestionAnswer mQuestionAnswer, HttpServletRequest request,
                       HttpServletResponse response) {
-        Long userId = Long.valueOf("202361020504320");
+        Long userId = JwtUtil.getId(request);
         mQuestionAnswer.setAuId(userId);
 
         IdGeneratorOptions options = new IdGeneratorOptions((short) 1);

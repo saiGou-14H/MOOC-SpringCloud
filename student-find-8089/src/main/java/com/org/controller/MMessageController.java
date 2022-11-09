@@ -113,5 +113,44 @@ public class MMessageController {
         return pg;
     }
 
+    /**
+     * listAll
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/listAll")
+    public String listAll(@RequestBody Map<String, Object> mMessage, HttpServletRequest request,
+                          HttpServletResponse response) {
+        System.out.println("token:" + request.getHeader("token"));
+        System.out.println("mMessage:" + new JSONObject(mMessage).toString());
+        System.out.println(new JSONObject(mMessage).get("page").toString());
+        int in = Integer.parseInt(new JSONObject(mMessage).get("page").toString());
+        System.out.println(in);
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg", "success");
+        map.put("code", "0");
+        List<Map<String, Object>> list = new ArrayList<>();
+
+        for (int i = 1; i < 9; i++) {
+            Map<String, Object> objectMap = new HashMap<>();
+            objectMap.put("vid", i);
+            objectMap.put("vtitle", "青龙战甲搭配机动兵");
+            objectMap.put("author", "狙击手麦克");
+            objectMap.put("headurl", "https://profile-avatar.csdnimg.cn/eabd69cac9064aa89f4d55b70acaf132_lgz0921.jpg");
+            list.add(objectMap);
+
+        }
+        Map<String, Object> page = new HashMap<>();
+        page.put("totalCount", "4");
+        page.put("pageSize", "10");
+        page.put("totalPage", "1");
+        page.put("currPage", "1");
+        if (in == 1) {
+            page.put("list", list);
+        } else {
+            page.put("list", null);
+        }
+        map.put("page", page);
+
+        return new JSONObject(map).toString();
+    }
 }
 

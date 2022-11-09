@@ -1,13 +1,13 @@
 package com.org.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
-import java.time.LocalDate;
+        import com.baomidou.mybatisplus.annotation.TableName;
+        import java.time.LocalDate;
+        import com.baomidou.mybatisplus.annotation.TableId;
+        import com.baomidou.mybatisplus.annotation.TableField;
+        import java.io.Serializable;
+                import lombok.Data;
+    import lombok.EqualsAndHashCode;
+            import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import java.time.LocalDate;
  * </p>
  *
  * @author Jie
- * @since 2022-11-07
+ * @since 2022-11-09
  */
 @Data
         @EqualsAndHashCode(callSuper = false)

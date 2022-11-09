@@ -1,12 +1,12 @@
 package com.org.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
+        import com.baomidou.mybatisplus.annotation.TableName;
+        import com.baomidou.mybatisplus.annotation.TableId;
+        import com.baomidou.mybatisplus.annotation.TableField;
+        import java.io.Serializable;
+                import lombok.Data;
+    import lombok.EqualsAndHashCode;
+            import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Jie
- * @since 2022-11-07
+ * @since 2022-11-09
  */
 @Data
         @EqualsAndHashCode(callSuper = false)
@@ -90,10 +90,7 @@ private static final long serialVersionUID = 1L;
                     @TableField("picture")
                             private String picture;
 
-                        /**
-         * 课程分享数
-         */
-                    @TableField("share")
+                @TableField("share")
                             private Integer share;
 
 

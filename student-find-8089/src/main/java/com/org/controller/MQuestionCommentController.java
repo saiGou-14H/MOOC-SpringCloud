@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.org.entity.MQuestionComment;
 import com.org.entity.vo.MQuestionCommentVO;
 import com.org.service.MQuestionCommentService;
+import com.org.util.JwtUtil;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class MQuestionCommentController {
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public String add(@RequestBody MQuestionComment mQuestionComment, HttpServletRequest request,
                       HttpServletResponse response) {
-        Long userId = Long.valueOf("202361020504320");
+        Long userId = JwtUtil.getId(request);
         mQuestionComment.setUserId(userId);
 
 //        IdGeneratorOptions options = new IdGeneratorOptions((short) 1);

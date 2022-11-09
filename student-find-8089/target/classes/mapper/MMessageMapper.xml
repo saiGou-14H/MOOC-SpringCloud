@@ -27,7 +27,7 @@
         values (#{id}, #{title}, #{content}, #{resourceUrl}, #{author}, NOW(), #{messageLike}, #{teaId}, #{commentNum});
     </insert>
     <!--分页查询-->
-    <select id="searchMMessageByPage" parameterType="Integer" resultType="com.org.entity.vo.MessagePageVO">
+    <select id="searchMMessageByPage" parameterType="int" resultType="com.org.entity.vo.MessagePageVO">
         select user.username, user.head_pic, message.*
         from m_message message
                  JOIN m_user user

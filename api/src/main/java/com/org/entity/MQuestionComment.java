@@ -1,9 +1,6 @@
 package com.org.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author Jie
- * @since 2022-11-07
+ * @since 2022-11-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -53,7 +50,8 @@ public class MQuestionComment implements Serializable {
     /**
      * 回复时间
      */
-    @TableField("date")
+
+    @TableField(value = "date", fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime date;
 

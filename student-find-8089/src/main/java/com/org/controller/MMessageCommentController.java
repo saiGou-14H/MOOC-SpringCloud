@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.org.entity.MMessageComment;
 import com.org.entity.vo.MMessageCommentVO;
 import com.org.service.MMessageCommentService;
+import com.org.util.JwtUtil;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,14 +41,13 @@ public class MMessageCommentController {
         List<MMessageCommentVO> mMessageCommentVOS = mMessageCommentService.searchMMessageCommentBy(messageId);
         return ServerResponseVO.success(mMessageCommentVOS);
     }
-
     /**
      * 用户点赞资讯
      */
     @RequestMapping(method = RequestMethod.POST, value = "/LikeMMessageByUserId")
     public String LikeMMessageByUserId(@RequestBody MMessageComment mMessageComment, HttpServletRequest request,
-                                       HttpServletResponse response) {
-        Long userId = Long.valueOf("202361020504320");
+                      HttpServletResponse response) {
+        Long userId = JwtUtil.getId(request);
         mMessageComment.setCId(userId);
         //先查询用户有没有评论过，有就是修改，没有就插入
 //        mMessageCommentService.save(mMessageComment);
@@ -61,6 +61,9 @@ public class MMessageCommentController {
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public String add(@RequestBody MMessageComment mMessageComment, HttpServletRequest request,
                       HttpServletResponse response) {
+
+        Long userId = JwtUtil.getId(request);
+        mMessageComment.setCId(userId);
 //        mMessageCommentService.save(mMessageComment);
         mMessageCommentService.addMMessageComment(mMessageComment);
         return "ok";

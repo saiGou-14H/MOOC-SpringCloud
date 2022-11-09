@@ -16,7 +16,7 @@
     </sql>
 
     <select id="searchStudentCourseCart" parameterType="Long"
-            resultType="com.org.entity.vo.StudentCourseCartVo">
+            resultType="com.org.entity.vo.StudentCourseCartVO">
         select mscc.*, mc.`name`, mc.integral, mc.picture
         from m_student_course_cart mscc
                  JOIN m_course mc

@@ -3,7 +3,6 @@ package com.org.entity.vo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @Author Jie
@@ -43,7 +42,7 @@ public class MQuestionCommentVO implements Serializable {
     /**
      * 回复时间
      */
-    private LocalDateTime date;
+    private String date;
 
     /**
      * 点赞数

@@ -20,8 +20,8 @@
     <!--    INSERT INTO `m_message_comment` (`user_id`, `message_id`, `content`, `date`, `is_like`)-->
     <!--    VALUES (#{userId}, #{messageId}, #{content}, NOW(), #{isLike});-->
     <insert id="addMMessageComment" parameterType="com.org.entity.MMessageComment">
-        insert into m_message_comment (user_id, message_id, content, date, is_like)
-        values (#{userId}, #{messageId}, #{content}, NOW(), #{isLike});
+        insert into m_message_comment (c_id, message_id, content, date, is_like)
+        values (#{cId}, #{messageId}, #{content}, NOW(), #{isLike});
     </insert>
     <!--根据资讯查询资讯的所有评论-->
     <!--    select *-->

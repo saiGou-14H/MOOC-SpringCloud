@@ -1,12 +1,13 @@
 package com.org.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.org.entity.MStudentCourseCart;
-import com.org.entity.vo.StudentCourseCartVo;
+import com.org.entity.dto.IDListDTO;
+import com.org.entity.vo.StudentCourseCartVO;
 import com.org.service.MStudentCourseCartService;
 import com.org.util.JwtUtil;
+import com.org.util.ServerResponseEnum;
 import com.org.util.ServerResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,16 +33,16 @@ public class MStudentCourseCartController {
     private MStudentCourseCartService mStudentCourseCartService;
 
     /**
-     * 分页查询用户的购物车
+     * 分页查询用户的购物车（包括课程的详情）
      */
     @RequestMapping(method = RequestMethod.GET, value = "/searchStudentCourseCart")
     public ServerResponseVO searchStudentCourseCart(HttpServletRequest request, HttpServletResponse response,
                                                     @RequestParam(name = "pageNum", defaultValue = "1") Long pageNum,
                                                     @RequestParam(name = "pageSize", defaultValue = "5") Long pageSize) {
-        Long userId = JwtUtil.getId(request);
 
+        Long userId = JwtUtil.getId(request);
 //        Long userId = 202361020504320;
-        List<StudentCourseCartVo> mMessageCommentVOS = mStudentCourseCartService.searchStudentCourseCart(userId, (pageNum - 1) * pageSize, pageSize);
+        List<StudentCourseCartVO> mMessageCommentVOS = mStudentCourseCartService.searchStudentCourseCart(userId, (pageNum - 1) * pageSize, pageSize);
         return ServerResponseVO.success(mMessageCommentVOS);
     }
 
@@ -69,11 +70,31 @@ public class MStudentCourseCartController {
     /**
      * 删除
      */
-    @RequestMapping(method = RequestMethod.POST, value = "/delete")
-    public String delete(HttpServletRequest request, HttpServletResponse response,
-                         String ids) {
-        List<String> idList = StrUtil.split(ids, ',');
-        mStudentCourseCartService.removeByIds(idList);
+    @RequestMapping(method = RequestMethod.GET, value = "/delete")
+    public ServerResponseVO delete(HttpServletRequest request, HttpServletResponse response,
+                                   String couId) {
+        QueryWrapper<MStudentCourseCart> wrapper = new QueryWrapper<>();
+        wrapper.eq("cou_id", couId);
+        mStudentCourseCartService.remove(wrapper);
+        return ServerResponseVO.success(ServerResponseEnum.SUCCESS);
+    }
+
+    /**
+     * 批量删除
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteByIds")
+    public String deleteByIds(HttpServletRequest request, HttpServletResponse response,
+                              @RequestBody IDListDTO idListDTO) {
+//        List<String> idList = StrUtil.split(ids, ',');
+//        mStudentCourseCartService.removeByIds(idList);¬
+
+//        mStudentCourseCartService.removeByIds(idListDTO.getIds());
+//        int id=22;
+//        mStudentCourseCartService.removeById(id);
+//        QueryWrapper<MStudentCourseCart> wrapper = new QueryWrapper<>();
+//        wrapper.eq("cou_id", 346764331);
+//        mStudentCourseCartService.remove(wrapper);
+
         return "ok";
     }
 

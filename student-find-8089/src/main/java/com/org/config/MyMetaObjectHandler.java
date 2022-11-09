@@ -21,6 +21,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         setFieldValByName("updateTime",LocalDateTime.now(),metaObject);
         setFieldValByName("payTime",LocalDateTime.now(),metaObject);
         setFieldValByName("date",LocalDateTime.now(),metaObject);
+        setFieldValByName("addTime",LocalDateTime.now(),metaObject);
     }
 
     @Override

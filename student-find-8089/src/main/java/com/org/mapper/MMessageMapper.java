@@ -1,7 +1,6 @@
 package com.org.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
 import com.org.entity.MMessage;
 import com.org.entity.vo.MessagePageVO;
 import org.apache.ibatis.annotations.Mapper;
