@@ -2,6 +2,7 @@ package com.org.entity;
 
         import com.baomidou.mybatisplus.annotation.TableName;
         import com.baomidou.mybatisplus.annotation.TableId;
+        import com.baomidou.mybatisplus.annotation.FieldFill;
         import com.baomidou.mybatisplus.annotation.TableField;
         import java.io.Serializable;
                 import lombok.Data;
@@ -79,19 +80,28 @@ private static final long serialVersionUID = 1L;
                             private Integer recoNum;
 
                         /**
+         * 课程封面图片
+         */
+                    @TableField("picture")
+                            private String picture;
+
+                        /**
+         * 课程分享数
+         */
+                    @TableField("share")
+                            private Integer share;
+
+                        /**
          * 乐观锁，默认为0
          */
                     @TableField("version")
                             private Integer version;
 
                         /**
-         * 课程封面图片
+         * 课程总时长（秒）
          */
-                    @TableField("picture")
-                            private String picture;
-
-                @TableField("share")
-                            private Integer share;
+                                        @TableField(value = "time", fill = FieldFill.INSERT)
+                                    private Long time;
 
 
         }

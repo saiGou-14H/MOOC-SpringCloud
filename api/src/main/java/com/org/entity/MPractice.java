@@ -3,6 +3,7 @@ package com.org.entity;
         import com.baomidou.mybatisplus.annotation.TableName;
         import java.time.LocalDate;
         import com.baomidou.mybatisplus.annotation.TableId;
+        import com.baomidou.mybatisplus.annotation.FieldFill;
         import com.baomidou.mybatisplus.annotation.TableField;
         import java.io.Serializable;
                 import lombok.Data;
@@ -40,8 +41,8 @@ private static final long serialVersionUID = 1L;
                         /**
          * 实践时间
          */
-                    @TableField("date")
-                            private LocalDate date;
+                                        @TableField(value = "date", fill = FieldFill.INSERT)
+                                    private LocalDate date;
 
                         /**
          * 实践地点

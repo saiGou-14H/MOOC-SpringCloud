@@ -1,78 +1,81 @@
 package com.org.entity;
 
-        import com.baomidou.mybatisplus.annotation.TableName;
-        import com.baomidou.mybatisplus.annotation.IdType;
-        import com.baomidou.mybatisplus.annotation.TableId;
-        import com.baomidou.mybatisplus.annotation.TableField;
-        import java.io.Serializable;
-                import lombok.Data;
-    import lombok.EqualsAndHashCode;
-            import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import java.io.Serializable;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * <p>
  * 章节表
-
+ *
  * </p>
  *
  * @author Jie
  * @since 2022-11-09
  */
 @Data
-        @EqualsAndHashCode(callSuper = false)
-        @TableName("m_course_chapter")
+@EqualsAndHashCode(callSuper = false)
+@TableName("m_course_chapter")
 public class MCourseChapter implements Serializable {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-                            /**
-         * 章节id,自增
-         */
-                                        @TableId(value = "id", type = IdType.AUTO)
-                                            private Integer id;
+    /**
+     * 章节id,自增
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-                        /**
-         * 章节排序序号
-         */
-                    @TableField("xuhao")
-                            private Integer xuhao;
+    /**
+     * 章节排序序号
+     */
+    @TableField("cha_index")
+    private Integer chaIndex;
 
-                        /**
-         * 章节标题
-         */
-                    @TableField("title")
-                            private String title;
+    /**
+     * 章节标题
+     */
+    @TableField("title")
+    private String title;
 
-                        /**
-         * 章节内容
-         */
-                    @TableField("content")
-                            private String content;
+    /**
+     * 章节内容
+     */
+    @TableField("content")
+    private String content;
 
-                        /**
-         * 课程id
-         */
-                    @TableField("course_id")
-                            private Long courseId;
+    /**
+     * 课程id
+     */
+    @TableField("course_id")
+    private Long courseId;
 
-                        /**
-         * 资源地址
-         */
-                    @TableField("resource_url")
-                            private String resourceUrl;
+    /**
+     * 资源地址
+     */
+    @TableField("resource_url")
+    private String resourceUrl;
 
-                        /**
-         * 章节时长
-         */
-                    @TableField("time")
-                            private Long time;
+    /**
+     * 章节时长
+     */
+    @TableField( "time")
+    private Long time;
 
-                        /**
-         * 乐观锁，默认为0
-         */
-                    @TableField("version")
-                            private Integer version;
+    /**
+     * 乐观锁，默认为0
+     */
+    @TableField("version")
+    private Integer version;
 
 
-        }
+}
 

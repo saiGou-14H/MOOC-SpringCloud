@@ -2,10 +2,12 @@ package com.org.ResponseVo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -20,7 +22,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @TableName("m_student_course")
 public class StudentCourseVo implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     /**
@@ -57,10 +58,17 @@ public class StudentCourseVo implements Serializable {
     private Boolean recommend;
 
     /**
-     * 课程评价
+     * 课程评论
      */
     @TableField("comment")
     private String comment;
+
+    /**
+     * 课程评论时间
+     */
+    @TableField("comment_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime commentTime;
 
     @TableField("username")
     private String username;

@@ -48,7 +48,7 @@ public class MMessageCommentController {
     public String LikeMMessageByUserId(@RequestBody MMessageComment mMessageComment, HttpServletRequest request,
                       HttpServletResponse response) {
         Long userId = JwtUtil.getId(request);
-        mMessageComment.setCId(userId);
+        mMessageComment.setUserId(userId);
         //先查询用户有没有评论过，有就是修改，没有就插入
 //        mMessageCommentService.save(mMessageComment);
         mMessageCommentService.addMMessageComment(mMessageComment);
@@ -63,7 +63,7 @@ public class MMessageCommentController {
                       HttpServletResponse response) {
 
         Long userId = JwtUtil.getId(request);
-        mMessageComment.setCId(userId);
+        mMessageComment.setUserId(userId);
 //        mMessageCommentService.save(mMessageComment);
         mMessageCommentService.addMMessageComment(mMessageComment);
         return "ok";

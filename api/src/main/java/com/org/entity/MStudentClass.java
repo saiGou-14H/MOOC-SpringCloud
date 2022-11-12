@@ -2,6 +2,7 @@ package com.org.entity;
 
         import com.baomidou.mybatisplus.annotation.TableName;
         import java.time.LocalDateTime;
+        import com.baomidou.mybatisplus.annotation.FieldFill;
         import com.baomidou.mybatisplus.annotation.TableField;
         import java.io.Serializable;
                 import lombok.Data;
@@ -39,8 +40,8 @@ private static final long serialVersionUID = 1L;
                         /**
          * 加入时间
          */
-                    @TableField("join_date")
-                                @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+                                        @TableField(value = "join_date", fill = FieldFill.INSERT)
+                                        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private LocalDateTime joinDate;
 
 

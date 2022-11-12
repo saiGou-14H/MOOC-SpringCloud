@@ -30,7 +30,7 @@ public class SCourseChapterController {
 //        };
 
         List<MCourseChapter> mCourseChapters= isCourseChapterService.list(qw);
-        mCourseChapters.sort(Comparator.comparing(MCourseChapter::getXuhao));
+        mCourseChapters.sort(Comparator.comparing(MCourseChapter::getChaIndex));
         return ServerResponseVO.success(mCourseChapters);
 
 

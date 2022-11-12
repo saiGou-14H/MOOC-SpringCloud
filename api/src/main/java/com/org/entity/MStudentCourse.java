@@ -1,6 +1,8 @@
 package com.org.entity;
 
         import com.baomidou.mybatisplus.annotation.TableName;
+        import java.time.LocalDateTime;
+        import com.baomidou.mybatisplus.annotation.FieldFill;
         import com.baomidou.mybatisplus.annotation.TableField;
         import java.io.Serializable;
                 import lombok.Data;
@@ -57,10 +59,17 @@ private static final long serialVersionUID = 1L;
                             private Boolean recommend;
 
                         /**
-         * 课程评价
+         * 课程评论
          */
                     @TableField("comment")
                             private String comment;
+
+                        /**
+         * 课程评论时间
+         */
+                                        @TableField(value = "comment_time", fill = FieldFill.INSERT)
+                                        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private LocalDateTime commentTime;
 
 
         }

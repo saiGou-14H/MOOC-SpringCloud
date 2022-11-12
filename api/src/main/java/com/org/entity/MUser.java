@@ -110,10 +110,16 @@ private static final long serialVersionUID = 1L;
                             private String sign;
 
                         /**
-         * 单天是否签到
+         * 当天是否签到
          */
                     @TableField("issign")
                             private Boolean issign;
+
+                        /**
+         * 当日学习时长
+         */
+                    @TableField("today_study_time")
+                            private Long todayStudyTime;
 
 
         }

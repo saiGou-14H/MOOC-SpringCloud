@@ -2,6 +2,7 @@ package com.org.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.org.entity.MCourseChapter;
 import com.org.entity.MLearnProgress;
 import com.org.service.IStudentLearnProgressService;
 import com.org.util.JwtUtil;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Comparator;
+import java.util.List;
 
 @RestController
 @RequestMapping("app/study")
@@ -41,5 +44,15 @@ public class StudentLearnProgressController {
             return ServerResponseVO.success(iStudentLearnProgressService.update(mLearnProgress,uw));
         }
         return ServerResponseVO.success(iStudentLearnProgressService.save(mLearnProgress));
+    }
+
+    @RequestMapping("shLearnProgress/{courseid}")
+    public ServerResponseVO shLearnProgressBycourse(HttpServletRequest request, @PathVariable Integer courseid){
+        Long Stuid = JwtUtil.getId(request);
+        QueryWrapper<MLearnProgress> qw = new QueryWrapper<>();
+        qw.eq("stu_id",Stuid).eq("cou_id",courseid);
+        List<MLearnProgress> mLearnProgress = iStudentLearnProgressService.list(qw);
+        mLearnProgress.sort(Comparator.comparing(MLearnProgress::getChaIndex));
+        return ServerResponseVO.success(mLearnProgress);
     }
 }

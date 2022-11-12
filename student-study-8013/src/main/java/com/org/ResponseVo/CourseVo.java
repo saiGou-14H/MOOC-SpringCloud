@@ -10,9 +10,7 @@ import java.io.Serializable;
 
 @Data
 public class CourseVo implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
     /**
      * 课程ID，雪花ID后8位
      */
@@ -68,12 +66,6 @@ public class CourseVo implements Serializable {
     private Integer recoNum;
 
     /**
-     * 乐观锁，默认为0
-     */
-    @TableField("version")
-    private Integer version;
-
-    /**
      * 课程封面图片
      */
     @TableField("picture")
@@ -84,6 +76,19 @@ public class CourseVo implements Serializable {
      */
     @TableField("share")
     private Integer share;
+
+    /**
+     * 乐观锁，默认为0
+     */
+    @TableField("version")
+    private Integer version;
+
+    /**
+     * 课程总时长（秒）
+     */
+    @TableField("time")
+    private Long time;
+
     @TableField("username")
     private String username;
     @TableField("head_pic")
