@@ -1,7 +1,9 @@
 package com.org.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.org.entity.MIntegralHistory;
 import com.org.entity.MUser;
 import com.org.service.IUserService;
 import com.org.util.JwtUtil;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("app/user")
@@ -55,14 +58,13 @@ public class UserController {
         for (int i = 1; i <7-index ; i++) {
             num*=10;
         }
-        user.setIntegral(user.getIntegral()+index+1);
         System.out.println(Integer.valueOf(user.getSign())+num);
         user.setSign(String.valueOf(Integer.valueOf(user.getSign())+num));
         user.setIssign(true);
         UpdateWrapper<MUser> uw = new UpdateWrapper<>();
         uw.eq("id",StuId);
-
-        return ServerResponseVO.success(iUserService.update(user,uw));
+        iUserService.update(user,uw);
+        return ServerResponseVO.success(IntegralHistoryController.adIntegralHistory(request,IntegralHistoryController.UP,index+1,true));
     }
 
 

@@ -35,7 +35,7 @@ public class SCourseCarController {
         return ServerResponseVO.massage(isCourseCarService.save(mStudentCourseCart),"加入购物车成功","加入购物车失败");
     }
 
-    //将课程加入购物车
+    //查询购物车
     @RequestMapping("shCourse")
     public ServerResponseVO shCourseInCar(HttpServletRequest request){
         Long stuId = JwtUtil.getId(request);

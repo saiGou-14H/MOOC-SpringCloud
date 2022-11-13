@@ -22,13 +22,6 @@ public class SCourseChapterController {
     public ServerResponseVO shChapterByClassId(@PathVariable Long courseid){
         QueryWrapper<MCourseChapter> qw = new QueryWrapper<>();
         qw.eq("course_id",courseid);
-//        Comparator comparator=  new Comparator<MCourseChapter>() {
-//            @Override
-//            public int compare(MCourseChapter o1, MCourseChapter o2) {
-//                return o1.getIndex()-o2.getIndex();
-//            }
-//        };
-
         List<MCourseChapter> mCourseChapters= isCourseChapterService.list(qw);
         mCourseChapters.sort(Comparator.comparing(MCourseChapter::getChaIndex));
         return ServerResponseVO.success(mCourseChapters);
