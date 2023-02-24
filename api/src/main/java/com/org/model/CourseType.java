@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -42,6 +44,9 @@ public class CourseType implements Serializable {
     @ApiModelProperty("类型封面图片")
     @TableField("picture")
     private String picture;
+
+    @TableField(exist = false)
+    private List<CourseType> courseTypeList;
 
 
 }

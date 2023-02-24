@@ -90,6 +90,23 @@ public class ClassCourseController {
     /*
     * deleted
     * */
+    @ApiOperation(value = "删除班级课程关联")
+    @GetMapping("/delClaCou/{cla_id}/{cou_id}")
+    public Result delClaCou(@PathVariable("cla_id") Long cla_id, @PathVariable("cou_id") Long cou_id) {
+
+        boolean flag = classCourseService.remove(new QueryWrapper<ClassCourse>().eq("class_id",cla_id).eq("cou_id", cou_id));
+        if(!flag) {return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "False");}
+        return Result.success(HttpStatus.SC_OK, "True");
+    }
+    @ApiOperation(value = "删除课程与所有班级的关联")
+    @GetMapping("/delClasCou/{cou_id}")
+    public Result delClasCou(@PathVariable("cou_id") Long cou_id) {
+
+        boolean flag = classCourseService.remove(new QueryWrapper<ClassCourse>().eq("cou_id", cou_id));
+        if(!flag) {return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "False");}
+        return Result.success(HttpStatus.SC_OK, "True");
+    }
+
 
     /*
     * update

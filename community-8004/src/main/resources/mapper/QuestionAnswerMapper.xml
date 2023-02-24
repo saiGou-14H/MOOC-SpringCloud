@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.QuestionAnswerMapper">
+
+    <!--
+    - add
+    -->
+
+    <!--
+    - delete
+    -->
+
+    <!--
+    - update
+    -->
+    <!--审核问题-->
+    <update id="upQuestion" parameterType="long">
+        update `m_question_answer`
+        <set>
+            is_check = #{state}
+        </set>
+        where id = #{queId}
+    </update>
+
+    <!--
+    - search
+    -->
+
+</mapper>

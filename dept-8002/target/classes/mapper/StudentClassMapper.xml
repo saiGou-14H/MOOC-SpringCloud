@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.StudentClassMapper">
 
-    <!--查询班级所有学生-->
+    <!--查询班级所有学生id-->
     <select id="shClassStu" parameterType="long" resultType="long">
         SELECT stu_id FROM `m_student_class`
         WHERE class_id = #{cla_id}

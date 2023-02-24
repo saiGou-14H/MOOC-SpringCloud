@@ -2,23 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.ClassMapper">
 
-    <resultMap id="ClassMap" type="com.org.model.Class">
+    <resultMap id="ClassMap1" type="com.org.model.Class">
         <id column="ID" property="id"/>
         <result column="NAME" property="name"/>
-        <result column="EMAIL" property="numbers"/>
-        <result column="EMAIL" property="introduction"/>
+        <result column="NUMBERS" property="numbers"/>
+        <result column="INTRODUCTION" property="introduction"/>
 
         <!--一对多的关联-->
-        <collection property="courses" ofType="com.org.model.Course" select="shAllStudent" column="ID">
+        <collection property="courses" ofType="com.org.model.Course" select="shAllCourse" column="ID">
             <result property="id" column="ID"/>
             <result property="name" column="NAME"/>
             <result property="tea_id" column="TEA_ID"/>
+            <result property="author" column="AUTHOR"/>
             <result property="cou_type" column="COU_TYPE"/>
             <result property="integral" column="INTEGRAL"/>
             <result property="introduction" column="INTRODUCTION"/>
             <result property="cata_num" column="CATE_NUM"/>
             <result property="coll_num" column="COLL_NUM"/>
             <result property="reco_num" column="RECO_NUM"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="ClassMap2" type="com.org.model.dto.ClassDTO1">
+        <id column="ID" property="claId"/>
+        <result column="NAME" property="claName"/>
+
+        <!--问题-->
+        <collection property="questionAnswers" ofType="com.org.model.dto.QuestionAnswerDTO1" select="shQueAns" column='{claId=ID}'></collection>
+    </resultMap>
+    <resultMap id="QuestionAnswerMap" type="com.org.model.dto.QuestionAnswerDTO1">
+        <id property="qaId" column="ID"/>
+        <result property="title" column="TITLE"/>
+        <result property="auId" column="AU_ID"/>
+        <result property="auName" column="AUNAME"/>
+        <result property="auHead" column="AUHEAD"/>
+        <result property="content" column="CONTENT"/>
+        <result property="resourceUrl" column="RESOURCE_URL"/>
+        <result property="isSelect" column="IS_SELECT"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="likeNum" column="LIKE_NUM"/>
+        <result property="commentNum" column="COMMENT_NUM"/>
+        <!--问题回复-->
+        <collection property="questionComments" ofType="com.org.model.QuestionComment" select="shQueComs" column="ID">
+            <result property="id" column="ID"/>
+            <result property="userId" column="USER_ID"/>
+            <result property="userName" column="USERNAME"/>
+            <result property="userHead" column="USERHEAD"/>
+            <result property="questionId" column="QUESTION_ID"/>
+            <result property="content" column="CONTENT"/>
+            <result property="date" column="DATE"/>
+            <result property="like_num" column="LIKE_NUM"/>
+            <result property="is_best" column="IS_BEST"/>
         </collection>
     </resultMap>
 
@@ -54,20 +88,56 @@
     search
     ->
     <!-查询班级-->
-    <select id="shClass" parameterType="long" resultMap="ClassMap">
+    <select id="shClass" parameterType="long" resultMap="ClassMap1">
         select * from m_class where id = #{id}
     </select>
 
-    <!--查询所有关联班级的学生-->
-    <select id="shAllStudent" parameterType="long" resultType="com.org.model.Course">
-        select mco.id, mco.name, mco.tea_id, mco.cou_type, mco.integral,
+    <!--查询该教师全部班级的全部课程-->
+    <select id="searchAllClass" parameterType="long" resultMap="ClassMap1">
+        select * from m_class where tea_id = #{teaId}
+    </select>
+
+    <!--查询班级关联的所有课程-->
+    <select id="shAllCourse" parameterType="long" resultType="com.org.model.Course">
+        select mco.id, mco.name, mu.username AS author, mco.tea_id, mco.cou_type, mco.integral,
                mco.introduction, mco.cata_num, mco.coll_num, mco.reco_num
         from m_course mco
+                 JOIN m_user mu
+                      ON mco.TEA_ID = mu.ID
                  JOIN m_class_course mcc
                       ON mco.ID = mcc.COU_ID
                  JOIN m_class mc
                       ON  mc.ID = mcc.CLASS_ID
         WHERE mc.ID = #{id}
+    </select>
+
+    <!--查询班级的问题以及回答-->
+    <select id="shQueCom" parameterType="hashmap" resultMap="ClassMap2">
+        select * from m_class
+        <where>
+            tea_id = #{teaId}
+            <if test="claId!=null and claId!=0">
+                AND id = #{claId}
+            </if>
+        </where>
+    </select>
+    <!--查询所有班级的问题-->
+    <select id="shQueAns" resultMap="QuestionAnswerMap">
+        SELECT mqa.id, mqa.title, mqa.au_id, mu.username as auName, mu.head_pic as auHead, mqa.content,
+               mqa.resource_url, mqa.is_select, mqa.create_time, mqa.like_num, mqa.comment_num
+        FROM `m_question_answer` AS mqa
+                 JOIN `m_user` AS mu
+                      ON mqa.au_id = mu.id
+        where mqa.cla_id=#{claId} AND mqa.deleted=0 AND mqa.is_check=0
+    </select>
+    <!--查询所有问题的回复-->
+    <select id="shQueComs" parameterType="long" resultType="com.org.model.QuestionComment">
+        SELECT mqc.id, mqc.user_id, mu.username as username, mu.head_pic as userHead, mqc.question_id, mqc.content,
+               mqc.date, mqc.like_num, mqc.is_best
+        FROM `m_question_comment` AS mqc
+                 JOIN `m_user` AS mu
+                      ON mqc.user_id = mu.id
+        WHERE mqc.question_id=#{id} AND mqc.is_check=1 AND mqc.deleted=0
     </select>
 
 </mapper>

@@ -2,6 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.CourseMapper">
 
+    <resultMap id="QuestionAnswerMap" type="com.org.model.dto.QuestionAnswerDTO1">
+        <id property="qaId" column="ID"/>
+        <result property="title" column="TITLE"/>
+        <result property="auId" column="AU_ID"/>
+        <result property="auName" column="AUNAME"/>
+        <result property="auHead" column="AUHEAD"/>
+        <result property="content" column="CONTENT"/>
+        <result property="resourceUrl" column="RESOURCE_URL"/>
+        <result property="isSelect" column="IS_SELECT"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="likeNum" column="LIKE_NUM"/>
+        <result property="commentNum" column="COMMENT_NUM"/>
+        <!--问题回复-->
+        <collection property="questionComments" ofType="com.org.model.QuestionComment" select="shQueComs" column="ID">
+            <result property="id" column="ID"/>
+            <result property="userId" column="USER_ID"/>
+            <result property="userName" column="USERNAME"/>
+            <result property="userHead" column="USERHEAD"/>
+            <result property="questionId" column="QUESTION_ID"/>
+            <result property="content" column="CONTENT"/>
+            <result property="date" column="DATE"/>
+            <result property="like_num" column="LIKE_NUM"/>
+            <result property="is_best" column="IS_BEST"/>
+        </collection>
+    </resultMap>
+
     <!--
     add
     -->
@@ -24,7 +50,13 @@
                 INTRODUCTION = #{introduction},
             </if>
             <if test="integral!=null and integral!='' ">
-                INTEGRAL = #{integral}
+                INTEGRAL = #{integral},
+            </if>
+            <if test="time!=null and time!='' ">
+                TIME = #{time},
+            </if>
+            <if test="picture!=null and picture!='' ">
+                picture = #{picture}
             </if>
         </set>
         where id= #{id}
@@ -51,5 +83,62 @@
         </where>
     </select>
 
+    <!--管理员-查询课程的问题及回复-->
+    <select id="shQueAns" parameterType="hashmap" resultMap="QuestionAnswerMap">
+        SELECT mqa.id, mqa.is_check, mqa.title, mqa.au_id, mu.username as auName, mu.head_pic as auHead, mqa.content,
+               mqa.resource_url, mqa.is_select, mqa.create_time, mqa.like_num, mqa.comment_num
+        FROM `m_question_answer` AS mqa
+                 JOIN `m_user` AS mu
+                      ON mqa.au_id = mu.id
+        <where>
+            <if test="claId!=0 and claId!=''">
+                mqa.cla_id=#{claId}
+            </if>
+            <if test="couId!=0 and couId!=''">
+                AND mqa.cou_id=#{couId}
+            </if>
+            <if test="isCheck==1">
+                AND mqa.is_check=#{isCheck}
+            </if>
+            <if test="isCheck!=1">
+                AND mqa.is_check!=1
+            </if>
+        </where>
+              AND mqa.deleted=0
+        ORDER BY mqa.id DESC
+    </select>
+    <!--教师-查询课程的问题及回复-->
+    <select id="shQueAns2" parameterType="hashmap" resultMap="QuestionAnswerMap">
+        SELECT mqa.id, mqa.title, mqa.au_id, mu.username as auName, mu.head_pic as auHead, mqa.content,
+               mqa.resource_url, mqa.is_select, mqa.create_time, mqa.like_num, mqa.comment_num
+        FROM `m_question_answer` AS mqa
+                 JOIN `m_user` AS mu
+                      ON mqa.au_id = mu.id
+        <where>
+            <if test="claId!=0 and claId!=''">
+                mqa.cla_id=#{claId}
+            </if>
+            <if test="couId!=0 and couId!=''">
+                AND mqa.cou_id=#{couId}
+            </if>
+            <if test="isCheck==1">
+                AND mqa.is_check=#{isCheck}
+            </if>
+            <if test="isCheck!=1">
+                AND mqa.is_check!=1
+            </if>
+        </where>
+          AND mqa.deleted=0
+    </select>
+    <!--查询问题的回复-->
+    <select id="shQueComs" parameterType="long" resultType="com.org.model.QuestionComment">
+        SELECT mqc.id, mqc.user_id, mu.username as username, mu.head_pic as userHead, mqc.question_id, mqc.content,
+               mqc.date, mqc.like_num, mqc.is_best
+        FROM `m_question_comment` AS mqc
+                 JOIN `m_user` AS mu
+                      ON mqc.user_id = mu.id
+        WHERE mqc.question_id=#{id} AND mqc.deleted=0
+        ORDER BY mqc.id DESC
+    </select>
 
 </mapper>

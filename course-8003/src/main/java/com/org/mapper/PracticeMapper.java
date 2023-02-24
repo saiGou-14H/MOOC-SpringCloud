@@ -21,11 +21,14 @@ import java.util.List;
 @Mapper
 public interface PracticeMapper extends BaseMapper<Practice> {
 
+    public boolean udPractice(Practice practice);
+
+    public List<String> shPracticeIds(Long course);
+
     public List<PracticeDTO1> shPractice1(Practice1 practice1);
 
     public List<Practice> shPractice2(HashMap<String,Long> params);
 
     public List<Practice> shPractice3(Long tea_id);
 
-    public boolean udPractice(Practice practice);
 }

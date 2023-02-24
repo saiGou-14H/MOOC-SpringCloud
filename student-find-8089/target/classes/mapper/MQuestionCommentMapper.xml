@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MQuestionCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MQuestionComment">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="question_id" property="questionId"/>
+        <result column="content" property="content"/>
+        <result column="date" property="date"/>
+        <result column="like_num" property="likeNum"/>
+        <result column="is_best" property="isBest"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , user_id, question_id, content, date, like, is_best
+    </sql>
+    <!--根据问题id查询问题的所有评论-->
+    <select id="searchMQuestionCommentBy" parameterType="int"
+            resultType="com.org.entity.vo.MQuestionCommentVO">
+        select user.username, user.head_pic, mqc.*
+        from m_question_comment mqc
+                 JOIN m_user user
+        ON mqc.user_id = user.id
+        WHERE mqc.question_id=#{questionId}
+        order by date desc
+    </select>
+
+    <!--分页查询我的回答（评论）列表-->
+    <select id="searchMyMQuestionCommentByPage" parameterType="Long"
+            resultType="com.org.entity.vo.MyMQuestionCommentVO">
+        select mqa.title, mqc.*
+        from m_question_comment mqc
+                 JOIN m_question_answer mqa
+                      ON mqc.question_id = mqa.id
+        WHERE mqc.user_id = #{userId}
+        order by date desc
+            limit #{start}
+               , #{end}
+
+    </select>
+    <!--    修改问题的回答数-->
+    <update id="updateQuestionAnswerCommentNum" parameterType="Long">
+        UPDATE m_question_answer
+        <set>
+            <if test="commentNum != '' and commentNum !=null">
+                comment_num = #{commentNum}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--    采纳问题回答-->
+    <update id="takeQuestionComment" parameterType="Long">
+        UPDATE m_question_comment
+        <set>
+            <if test="isBest != '' and isBest !=null">
+                is_best = #{isBest}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
+

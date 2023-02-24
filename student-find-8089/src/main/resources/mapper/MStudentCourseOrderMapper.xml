@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MStudentCourseOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MStudentCourseOrder">
+        <id column="id" property="id"/>
+        <result column="stu_id" property="stuId"/>
+        <result column="pay_state" property="payState"/>
+        <result column="create_time" property="createTime"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="remark" property="remark"/>
+        <result column="all_integral" property="allIntegral"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , stu_id, pay_state, create_time, pay_time, remark, all_integral
+    </sql>
+    <!--        select msco.*,mscod.*,mc.`name`, mc.integral, mc.picture
+            from m_student_course_order msco
+                       JOIN m_student_course_order_detail mscod
+                          ON mscod.order_id = msco.id
+                                       JOIN m_course mc
+                          ON mc.id = mscod.course_id
+            WHERE msco.stu_id = '202361020504320' limit 0, 5-->
+    <select id="searchOrderCourseByPage" parameterType="Long"
+            resultType="com.org.entity.vo.StudentOrderCourseVO">
+
+        select msco.create_time, mc.name, mc.integral, mc.picture
+        from m_student_course_order msco
+        JOIN m_student_course_order_detail mscod
+        ON mscod.order_id = msco.id
+        JOIN m_course mc
+        ON mc.id = mscod.course_id
+        WHERE msco.stu_id = #{userId}
+        <if test="couName != null and couName !=''">
+            AND mc.name like CONCAT('%',#{couName},'%')
+        </if>
+        order by create_time desc
+        limit #{start}, #{end}
+    </select>
+    <!--查询课程列表-->
+    <!--            <where>
+                id in (
+                <foreach collection="list" item="id" index="index" separator=",">
+                    #{id}
+                </foreach>
+                )
+            </where>-->
+    <select id="searchCourseList" parameterType="java.util.ArrayList"
+            resultType="com.org.entity.vo.CourseVO">
+
+        SELECT name, integral, picture
+        FROM m_course
+        where id in
+        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </select>
+
+</mapper>
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MessageCommentMapper">
+
+    <!--
+    -add
+    -->
+
+    <!--
+    -delete
+    -->
+
+    <!--
+    -update
+    -->
+
+    <!--
+    -search
+    -->
+    <!--查询资讯评论-->
+    <select id="shMsgCom" parameterType="long" resultType="com.org.model.dto.MessageComment1">
+        SELECT mm.id,mu.username AS c_name,mm.content,mm.date,mm.is_like FROM `m_message_comment`mm
+            JOIN `m_user` mu
+                 on mm.c_id = mu.id
+        WHERE mm.message_id = #{msg_id} AND mm.deleted=0
+    </select>
+
+</mapper>

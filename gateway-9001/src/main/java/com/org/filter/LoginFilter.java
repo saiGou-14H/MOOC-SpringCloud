@@ -36,10 +36,11 @@ public class LoginFilter implements org.springframework.cloud.gateway.filter.Glo
         ServerHttpRequest request = exchange.getRequest();
 
         String path = request.getURI().getPath();
-        //如果是登录则放行
-        if(ALLOW_URL.contains(path)) {
+        //如果是登录、访问图片、视频、头像就放行
+        if(ALLOW_URL.contains(path) || path.contains("picture") || path.contains("video") || path.contains("head") || path.contains("/user/udPicture") || path.contains("file")) {
             return chain.filter(exchange);
         }
+
         //不然先从请求头查有没有token，跟redis里比对并且辨别有没有失效
         HttpHeaders headers = request.getHeaders();
         List<String> authorization = headers.get("Authorization");
@@ -67,6 +68,7 @@ public class LoginFilter implements org.springframework.cloud.gateway.filter.Glo
             DataBuffer wrap = response.bufferFactory().wrap(bytes);
 
         return response.writeWith(Mono.just(wrap));
+        //return chain.filter(exchange);
     }
 
     @Override

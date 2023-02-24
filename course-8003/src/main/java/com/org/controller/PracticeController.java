@@ -4,18 +4,17 @@ package com.org.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.yitter.contract.IdGeneratorOptions;
 import com.github.yitter.idgen.YitIdHelper;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.org.model.Course;
 import com.org.model.Practice;
 import com.org.model.Result;
+import com.org.model.StudentPractice;
 import com.org.model.dto.PracticeDTO1;
 import com.org.model.vo.Practice1;
 import com.org.service.IPracticeService;
+import com.org.service.IStudentPracticeService;
 import com.org.util.JwtUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,6 +39,8 @@ public class PracticeController {
     private RestTemplate restTemplate;      //提供多种便捷访问远程http服务的方法，简单的Restful服务模板
     @Autowired
     private IPracticeService practiceService;
+    @Autowired
+    private IStudentPracticeService studentPracticeService;
 
     private static final String REST_URL_PREFIX_STUPRA = "http://COURSE-8003";
 
@@ -63,12 +64,12 @@ public class PracticeController {
         //先插入数据
         if(!practiceService.save(practice)) return Result.failure(HttpStatus.SC_INTERNAL_SERVER_ERROR, "False");
         //先插入学生与实践关联
-        Map<String, Object> requestMap = new HashMap<>();
+        /*Map<String, Object> requestMap = new HashMap<>();
         requestMap.put("pra_id", practice.getId());
         requestMap.put("cou_id", practice.getCouId());
         requestMap.put("cla_id", classId);
         if(!restTemplate.getForObject(REST_URL_PREFIX_STUPRA+"/studentPractice/adStuPractice/{pra_id}/{cla_id}/{cou_id}", boolean.class, requestMap)) throw new RuntimeException("插入课程字典发生错误");
-
+        */
         return Result.success(HttpStatus.SC_OK, "True");
     }
     public Result hystrixCtPractice(@RequestBody Practice practice, @RequestParam Long classId, HttpServletRequest request) {
@@ -78,6 +79,15 @@ public class PracticeController {
     /*
      *delete
      * */
+    @ApiOperation(value = "删除实践")
+    @GetMapping("/delPractice/{pra_id}")
+    public Result delPractice(@PathVariable Long pra_id) {
+        //先删除学生实践关联
+        studentPracticeService.remove(new QueryWrapper<StudentPractice>().eq("pra_id", pra_id));
+        //再删除实践
+        practiceService.remove(new QueryWrapper<Practice>().eq("id", pra_id));
+        return Result.success(HttpStatus.SC_OK, "True");
+    }
 
     /*
      *update
@@ -116,6 +126,13 @@ public class PracticeController {
     @GetMapping("/shPractice3")
     public Result shPractice2(HttpServletRequest request) {
         List<Practice> practiceList = practiceService.shPractice3(JwtUtil.getId(request));
+        return Result.success(HttpStatus.SC_OK, "null", practiceList);
+    }
+
+    @ApiOperation(value = "查询课程的所有实践id")
+    @GetMapping("/shPracticeIds/cou_id")
+    public Result shPracticeIds(@PathVariable Long cou_id) {
+        List<String> practiceList = practiceService.shPracticeIds(cou_id);
         return Result.success(HttpStatus.SC_OK, "null", practiceList);
     }
 

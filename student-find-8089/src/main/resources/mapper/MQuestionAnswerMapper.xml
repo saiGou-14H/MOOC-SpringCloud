@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MQuestionAnswerMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MQuestionAnswer">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="au_id" property="auId"/>
+        <result column="content" property="content"/>
+        <result column="resource_url" property="resourceUrl"/>
+        <result column="creat_time" property="creatTime"/>
+        <result column="is_question" property="isQuestion"/>
+        <result column="is_select" property="isSelect"/>
+        <result column="ip" property="ip"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , title, au_id, content, resource_url, creat_time, is_question, is_select, ip
+    </sql>
+    <!--分页查询我的问题列表-->
+    <select id="searchMyMQuestionAnswerByPage" parameterType="Long" resultType="com.org.entity.vo.QuestionAnswerPageVO">
+        select user.username, user.head_pic, mqa.*
+        from m_question_answer mqa
+                 JOIN m_user user
+        ON mqa.au_id = user.id
+        WHERE mqa.au_id=#{userId}
+        order by create_time desc
+            limit #{start}
+               , #{end}
+
+    </select>
+    <!--分页查询所有问题列表-->
+    <select id="searchmQuestionAnswerByPage" parameterType="int" resultType="com.org.entity.vo.QuestionAnswerPageVO">
+        select user.username, user.head_pic, mqa.*
+        from m_question_answer mqa
+                 JOIN m_user user
+        ON mqa.au_id = user.id
+        order by create_time desc
+            limit #{start}, #{end}
+    </select>
+
+    <!--根据问题Id查询问题详情-->
+    <select id="searchMQuestionAnswerById" parameterType="int" resultType="com.org.entity.vo.QuestionAnswerPageVO">
+        select user.username, user.head_pic, mqa.*
+        from m_question_answer mqa
+                 JOIN m_user user
+        ON mqa.au_id = user.id
+        WHERE mqa.id=#{questionId}
+    </select>
+</mapper>
+

@@ -6,8 +6,8 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ServerResponseEnum {
-        SUCCESS(0, "成功"),
-        ERROR(10, "失败"),
+        SUCCESS(200, "成功"),
+        ERROR(300, "失败"),
 
         ACCOUNT_NOT_EXIST(11, "账号不存在"),
         DUPLICATE_ACCOUNT(12, "账号重复"),
@@ -18,4 +18,4 @@ public enum ServerResponseEnum {
         ;
         Integer code;
         String message;
-        }
+}

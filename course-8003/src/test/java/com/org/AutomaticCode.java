@@ -26,19 +26,19 @@ public class AutomaticCode {
                             .disableOpenDir()       //禁止打开输出目录
                             .enableSwagger() //开启 swagger 模式
                             .commentDate("yyyy-MM-dd")          //注释日期
-                            .outputDir("F:\\综合实训\\mooc-sc-main\\course-8003\\src\\main\\java");// 指定输出目录
+                            .outputDir("F:\\综合实训\\mooc-sc\\course-8003\\src\\main\\java");// 指定输出目录
                 })
                 /*包配置*/
                 .packageConfig(builder -> {
                     builder.parent("com") // 设置父包名
                             .moduleName("org") // 设置父包模块名
                             .entity("model")    //实体类包名
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,"F:\\综合实训\\mooc-sc-main\\course-8003\\src\\main\\resources\\mapper"));
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,"F:\\综合实训\\mooc-sc\\course-8003\\src\\main\\resources\\mapper"));
                 })
                 //  .templateEngine(new FreemarkerTemplateEngine()) 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 /*策略配置*/
                 .strategyConfig(builder -> {
-                    builder.addInclude("m_student_course") // 设置需要生成的表名
+                    builder.addInclude("m_course_chapter") // 设置需要生成的表名
                             .addTablePrefix("m_","t_") ; // 设置过滤表前缀
                     /*Enitity策略配置*/
                     builder.entityBuilder()

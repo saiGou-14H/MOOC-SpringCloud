@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ISStudentCourseMapper">
+    <!--查询课程-->
+    <select id="getHaveCourseList" parameterType="Long" resultType="com.org.ResponseVo.CourseVo">
+        SELECT
+            m_user.username,
+            m_user.head_pic,
+            m_user.face_pic,
+            m_course.*
+        FROM
+            m_user,
+            m_course
+        WHERE
+            m_user.id = m_course.tea_id
+          AND m_course.id IN ((
+            SELECT
+                m_student_course.cou_id
+            FROM
+                m_student_course
+                    INNER JOIN m_user ON m_student_course.stu_id = m_user.id
+            WHERE
+                m_student_course.stu_id = m_user.id
+              AND m_student_course.have = 1
+              AND m_user.id = #{id}
+              AND m_student_course.cou_id NOT IN (
+                SELECT
+                    `m_course`.`id` AS `id`
+                FROM
+                    (((
+                        `m_class`
+                            JOIN `m_class_course` ON ((
+                            `m_class`.`id` = `m_class_course`.`class_id`
+                            )))
+                        JOIN `m_course` ON ((
+                            `m_class_course`.`cou_id` = `m_course`.`id`
+                            )))
+                        JOIN `m_user`
+                        )
+                WHERE
+                    (
+                                `m_class`.`id` IN (
+                                SELECT
+                                    `m_student_class`.`class_id`
+                                FROM
+                                    (
+                                        `m_user`
+                                            JOIN `m_student_class` ON ((
+                                            `m_user`.`id` = `m_student_class`.`stu_id`
+                                            )))
+                                WHERE
+                                    ( `m_user`.`id` = #{id} ))
+                            AND ( `m_class`.`tea_id` = `m_user`.`id` )))
+        ))
+    </select>
+
+
+</mapper>

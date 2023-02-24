@@ -1,9 +1,6 @@
 package com.org.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.Version;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -68,10 +65,26 @@ public class Course implements Serializable {
     @TableField("reco_num")
     private Integer recoNum;
 
+    @ApiModelProperty("课程封面")
+    @TableField("picture")
+    private String picture;
+
+    @ApiModelProperty("课程分享数")
+    @TableField("share")
+    private Integer share;
+
     @ApiModelProperty("乐观锁，默认为0")
     @TableField("version")
     @Version
     private Integer version;
 
+    @ApiModelProperty("课程时长")
+    @TableField("time")
+    private Long time;
+
+    @ApiModelProperty("逻辑删除")
+    @TableField("deleted")
+    @TableLogic
+    private Boolean deleted;
 
 }

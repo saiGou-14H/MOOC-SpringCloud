@@ -2,6 +2,76 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.org.mapper.UserMapper">
 
+    <resultMap id="UserMap" type="com.org.model.dto.UserDTO1">
+        <id column="ID" property="id"/>
+        <result column="USERNAME" property="username"/>
+        <result column="AGE" property="age"/>
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE" property="phone"/>
+        <result column="LEARNED" property=""/>
+        <result column="STUDY_TIME" property="studyTime"/>
+        <result column="INTERGAL" property="integral"/>
+        <result column="POSITION" property="position"/>
+        <result column="HEAD_PIC" property="headPic"/>
+        <result column="FACE_PIC" property="facePic"/>
+        <result column="INTRODUCTION" property="introduction"/>
+        <result column="SIGN" property="sign"/>
+
+        <!--这里传两个参数，一个是最开始的班级id、另一个是学生id-->
+        <collection property="learned" ofType="float" select="shStuLearned" column='{stu_id=id,cla_id=msc.class_id}'>
+            <result property="coursesTime" column="LEARNED"/>
+            <result property="learned" column="LEARNED"/>
+        </collection>
+    </resultMap>
+
+    <!--
+    -add
+    -->
+
+    <!--
+    -delete
+    -->
+
+    <!--
+    -update
+    -->
+    <update id="udMyself" parameterType="com.org.model.User">
+        update `m_user`
+        <set>
+            <if test="username!=null and username!=''">
+                USERNAME = #{username},
+            </if>
+            <if test="password!=null and password!=''">
+                PASSWORD = #{password},
+            </if>
+            <if test="age!=null and age!=''">
+                AGE = #{age},
+            </if>
+            <if test="email!=null and email!=''">
+                EMAIL = #{eamil},
+            </if>
+            <if test="phone!=null and phone!=''">
+                PHONE = #{phone},
+            </if>
+            <if test="position!=null and position!=''">
+                POSITION = #{position},
+            </if>
+            <if test="headPic!=null and headPic!=''">
+                HEAD_PIC = #{headPic},
+            </if>
+            <if test="facePic!=null and facePic!=''">
+                FACE_PIC = #{facePic},
+            </if>
+            <if test="introduction!=null and introduction!=''">
+                INTRODUCTION = #{introduction}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--
+    -search
+    -->
     <!--管理员-模糊查询会议-->
     <select id="shUser" parameterType="com.org.model.User" resultType="com.org.model.User">
         SELECT * FROM `m_user`
@@ -13,6 +83,35 @@
                 AND username LIKE CONCAT('%',#{username},'%') <!--连接字符串-->
             </if>
         </where>
+    </select>
+    <!--查询本班级所有学生信息2-->
+    <select id="shUserByCla2" parameterType="long" resultMap="UserMap">
+        SELECT * FROM `m_user` as mu
+          JOIN `m_student_class` as msc
+               ON mu.id = msc.stu_id
+        WHERE msc.class_id = #{cla_id}
+    </select>
+    <!--查找学生在班级中总学习进度-->
+    <select id="shStuLearned" resultType="com.org.model.dto.TimeDTO">
+        SELECT
+            SUM(mc.time) AS coursesTime,
+            (select sum(`read_time`) AS learned from `m_learn_progress` AS mlp where
+                mlp.stu_id = #{stu_id} and mlp.class_id = #{cla_id}) AS learned
+        FROM m_course AS mc
+                 JOIN `m_class_course` as mcc
+                      ON mc.id = mcc.cou_id
+        WHERE mcc.class_id = #{cla_id}
+
+    </select>
+    <!--查找学生在班级中总学习进度-->
+    <select id="shStuLearnedPro" resultType="com.org.model.dto.UserDTO2">
+        SELECT mc.id, mc.name, mc.time AS courseTime,
+               (select sum(`read_time`) AS learned from `m_learn_progress` AS mlp where
+                   mlp.stu_id = #{stu_id} and mlp.cou_id = mcc.cou_id) AS learned
+        FROM m_course AS mc
+                 JOIN `m_class_course` as mcc
+                      ON mc.id = mcc.cou_id
+        WHERE mcc.class_id = #{cla_id}
     </select>
 
 </mapper>

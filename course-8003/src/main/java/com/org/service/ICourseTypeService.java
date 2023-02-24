@@ -3,6 +3,8 @@ package com.org.service;
 import com.org.model.CourseType;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程类别字典表	 服务类
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICourseTypeService extends IService<CourseType> {
 
+    public List<CourseType> shCourseType();
 }

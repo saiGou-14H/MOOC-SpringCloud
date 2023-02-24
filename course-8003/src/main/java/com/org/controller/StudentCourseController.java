@@ -62,15 +62,18 @@ public class StudentCourseController {
 
         ArrayList<String> temp = (ArrayList<String>) result.getData();
         List<Long> couIds = temp.stream().map(Long::parseLong).collect(Collectors.toList());
-
-        List<StudentCourse> studentCourses = new ArrayList<>();
-        Iterator<Long> iterator = couIds.iterator();//迭代
-        while (iterator.hasNext()) {
-            Long couid = iterator.next();
+        //如果班级有课程
+        if(!couIds.isEmpty()) {
+            List<StudentCourse> studentCourses = new ArrayList<>();
+            Iterator<Long> iterator = couIds.iterator();//迭代
+            while (iterator.hasNext()) {
+                Long couid = iterator.next();
 //            System.out.println(stu_id+":"+couid);
-            studentCourses.add(new StudentCourse().setStuId(stu_id).setCouId(couid));
+                studentCourses.add(new StudentCourse().setStuId(stu_id).setCouId(couid));
+            }
+            if (!studentCourseService.saveBatch(studentCourses)) return false;
         }
-        if (!studentCourseService.saveBatch(studentCourses)) return false;
+
         return true;
     }
 

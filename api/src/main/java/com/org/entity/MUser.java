@@ -15,7 +15,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Jie
- * @since 2022-10-23
+ * @since 2022-12-03
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -68,7 +68,7 @@ public class MUser implements Serializable {
     private String phone;
 
     /**
-     * 学习时长
+     * 总学习时长（秒）
      */
     @TableField("study_time")
     private Long studyTime;
@@ -108,6 +108,18 @@ public class MUser implements Serializable {
      */
     @TableField("sign")
     private String sign;
+
+    /**
+     * 当天是否签到
+     */
+    @TableField("issign")
+    private Boolean issign;
+
+    /**
+     * 当日学习时长（秒）
+     */
+    @TableField("today_study_time")
+    private Long todayStudyTime;
 
 
 }

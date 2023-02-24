@@ -17,8 +17,9 @@
         <module>eureka-7002</module>
         <module>gateway-9001</module>
         <module>gateway-9002</module>
+        <module>student-find-8089</module>
+        <module>student-study-8013</module>
         <module>user-8001</module>
-        <module>Login-10000</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

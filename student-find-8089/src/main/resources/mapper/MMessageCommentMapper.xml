@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MMessageCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MMessageComment">
+        <id column="id" property="id"/>
+        <result column="c_id" property="cId"/>
+        <result column="message_id" property="messageId"/>
+        <result column="content" property="content"/>
+        <result column="date" property="date"/>
+        <result column="is_like" property="isLike"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , c_id, message_id, content, date, is_like
+    </sql>
+    <!--    INSERT INTO `m_message_comment` (`user_id`, `message_id`, `content`, `date`, `is_like`)-->
+    <!--    VALUES (#{userId}, #{messageId}, #{content}, NOW(), #{isLike});-->
+    <insert id="addMMessageComment" parameterType="com.org.entity.MMessageComment">
+        insert into m_message_comment (user_id, message_id, content, date, is_like)
+        values (#{userId}, #{messageId}, #{content}, NOW(), #{isLike});
+    </insert>
+    <!--根据资讯查询资讯的所有评论-->
+    <!--    select *-->
+    <!--    from m_message_comment-->
+    <!--    WHERE message_id =#{messageId}-->
+    <select id="searchMMessageCommentBy" parameterType="int"
+            resultType="com.org.entity.vo.MMessageCommentVO">
+
+
+        select user.username, user.head_pic, mmc.*
+        from m_message_comment mmc
+                 JOIN m_user user
+        ON mmc.user_id = user.id
+        WHERE mmc.message_id=#{messageId}
+        order by date desc
+    </select>
+    <!--    修改资讯的评论数-->
+    <update id="updateMessageCommentNum" parameterType="Long">
+        UPDATE m_message
+        <set>
+            <if test="commentNum != '' and commentNum !=null">
+                comment_num = #{commentNum}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
+

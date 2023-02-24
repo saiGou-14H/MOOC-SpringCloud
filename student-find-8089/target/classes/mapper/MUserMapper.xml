@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MUser">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="role" property="role"/>
+        <result column="age" property="age"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="study_time" property="studyTime"/>
+        <result column="integral" property="integral"/>
+        <result column="position" property="position"/>
+        <result column="head_pic" property="headPic"/>
+        <result column="face_pic" property="facePic"/>
+        <result column="introduction" property="introduction"/>
+        <result column="sign" property="sign"/>
+        <result column="issign" property="issign"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , username, password, role, age, email, phone, study_time, integral, position, head_pic, face_pic, introduction, sign, issign
+    </sql>
+
+    <!--修改用户信息-->
+    <update id="updateUser" parameterType="com.org.entity.MUser">
+        UPDATE m_user
+        <set>
+            <if test="username != '' and username !=null">
+                username = #{username},
+            </if>
+            <if test="password != '' and password !=null">
+                password = #{password},
+            </if>
+            <if test="role != '' and role !=null">
+                role = #{role},
+            </if>
+            <if test="age != '' and age !=null">
+                age = #{age},
+            </if>
+            <if test="email != '' and email !=null">
+                email = #{email},
+            </if>
+            <if test="phone != '' and phone !=null">
+                phone = #{phone},
+            </if>
+            <if test="studyTime != '' and studyTime !=null">
+                study_time = #{studyTime},
+            </if>
+            <if test="integral != '' and integral !=null">
+                integral = #{integral},
+            </if>
+            <if test="position != '' and position !=null">
+                position = #{position},
+            </if>
+            <if test="headPic != '' and headPic !=null">
+                head_pic = #{headPic},
+            </if>
+            <if test="facePic != '' and facePic !=null">
+                face_pic = #{facePic},
+            </if>
+            <if test="introduction != '' and introduction !=null">
+                introduction = #{introduction},
+            </if>
+            <if test="sign != '' and sign !=null">
+                sign = #{sign},
+            </if>
+            <if test="issign != '' and issign !=null ">
+                issign = #{issign},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>
+

@@ -14,18 +14,41 @@
     -update
     -->
     <!--修改实践-->
+    <update id="udPractice" parameterType="com.org.model.Practice">
+        UPDATE m_practice
+        <set>
+            <if test="name!=null and name!='' ">
+                NAME = #{name},
+            </if>
+            <if test="date!=null and date!='' ">
+                DATE = #{date},
+            </if>
+            <if test="site!=null and site!='' ">
+                SITE = #{site},
+            </if>
+            <if test="content!=null and content!='' ">
+                CONTENT = #{content}
+            </if>
+        </set>
+        where id= #{id}
+    </update>
 
     <!--
     -search
     -->
+    <!--查询单个课程的全部实践-->
+    <select id="shPracticeIds" parameterType="long" resultType="string">
+        SELECT id FROM `m_practice` WHERE cou_id = #{course} AND deleted = 0
+    </select>
     <!--查看实践1-模糊查询-->
     <select id="shPractice1" parameterType="com.org.model.vo.Practice1" resultType="com.org.model.dto.PracticeDTO1">
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
           JOIN `m_course` mc ON mc.id=mp.cou_id
           JOIN `m_user` mu ON mu.id=mp.tea_id
         <where>
+            mp.deleted = 0
             <if test="couName!=null and couName!=''">
-                mc.name LIKE CONCAT('%',#{couName},'%')
+                AND mc.name LIKE CONCAT('%',#{couName},'%')
             </if>
             <if test="praName!=null and praName!=''">
                 AND mp.name LIKE CONCAT('%',#{praName},'%')
@@ -41,8 +64,9 @@
         JOIN `m_course` mc ON mc.id=mp.cou_id
         JOIN `m_user` mu ON mu.id=mp.tea_id
         <where>
+            mp.deleted = 0
             <if test="cou_id!=null and cou_id!=''">
-                mc.id = #{cou_id}
+                AND mc.id = #{cou_id}
             </if>
             <if test="tea_id!=null and tea_id!=''">
                 AND mp.tea_id = #{tea_id}
@@ -54,7 +78,7 @@
         SELECT mp.id,mp.name,mc.name AS couName,mu.username AS author,mp.date,mp.site,mp.content FROM `m_practice` mp
         JOIN `m_course` mc ON mc.id=mp.cou_id
         JOIN `m_user` mu ON mu.id=mp.tea_id
-        where mp.tea_id = #{tea_id}
+        where mp.tea_id = #{tea_id} AND mp.deleted = 0
     </select>
 
 </mapper>

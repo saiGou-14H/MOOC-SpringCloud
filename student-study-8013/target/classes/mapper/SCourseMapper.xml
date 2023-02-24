@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.ISCourseMapper">
+    <!--查询课程-->
+    <select id="getCourseByClassId" parameterType="Long" resultType="com.org.ResponseVo.CourseVo">
+        SELECT
+            m_user.username,
+            m_user.head_pic,
+            m_user.face_pic,
+            m_course.*
+        FROM
+            m_class
+                INNER JOIN
+            m_class_course
+            ON
+                m_class.id = m_class_course.class_id
+                INNER JOIN
+            m_course
+            ON
+                m_class_course.cou_id = m_course.id,
+            m_user
+        WHERE
+            m_class.id = #{id} AND
+            m_class.tea_id = m_user.id
+    </select>
+
+    <select id="shCourseComment" parameterType="Long" resultType="com.org.ResponseVo.StudentCourseVo">
+        SELECT
+        m_user.username,
+        m_user.head_pic,
+        m_user.face_pic,
+        m_student_course.*
+        FROM
+        m_student_course
+        INNER JOIN
+        m_user
+        ON
+        m_student_course.stu_id = m_user.id
+        WHERE
+        m_student_course.stu_id = m_user.id AND
+        m_student_course.have = 1 AND
+        m_student_course.`comment` !="" AND
+        m_student_course.cou_id = #{courseid} order by m_student_course.comment_time desc
+    </select>
+
+    <select id="shCourseByParentType"  resultType="com.org.entity.MCourse">
+        SELECT
+            m_course.*
+        FROM
+            m_course,
+            m_course_type
+        WHERE
+            m_course.cou_type = m_course_type.type AND
+                m_course_type.type IN ((SELECT
+                                            m_course_type.type
+                                        FROM
+                                            m_course_type
+                                        WHERE
+                                                m_course_type.parent_id in
+                                                (SELECT
+                                                     m_course_type.id
+                                                 FROM
+                                                     m_course_type
+                                                 WHERE
+                                                     m_course_type.type = #{type}))) AND
+            m_course.`name` LIKE "%${like}%"
+            <if test="paixv!=null and paixv!='' ">
+                order by
+                <if test="paixv=='coll_num'">coll_num</if>
+                <if test="paixv=='cata_num'">cata_num</if>
+                <if test="paixv=='reco_num'">reco_num</if>
+                <if test="paixv=='share'">share</if>
+                desc
+            </if>
+            limit #{current},#{size}
+
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MMessage">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="resource_url" property="resourceUrl"/>
+        <result column="author" property="author"/>
+        <result column="date" property="date"/>
+        <result column="message_like" property="messageLike"/>
+        <result column="tea_id" property="teaId"/>
+        <result column="comment_num" property="commentNum"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , title, content, resource_url, author, date, message_like, tea_id, comment_num
+    </sql>
+
+    <insert id="addMessage" parameterType="com.org.entity.MMessage">
+
+        insert into m_message (id, title, content, resource_url, author, date, message_like, tea_id, comment_num)
+        values (#{id}, #{title}, #{content}, #{resourceUrl}, #{author}, NOW(), #{messageLike}, #{teaId}, #{commentNum});
+    </insert>
+    <!--分页查询-->
+    <select id="searchMMessageByPage" parameterType="int" resultType="com.org.entity.vo.MessagePageVO">
+        select user.username, user.head_pic, message.*
+        from m_message message
+                 JOIN m_user user
+        ON message.tea_id = user.id
+        order by date desc
+            limit #{start}, #{end}
+    </select>
+</mapper>
+

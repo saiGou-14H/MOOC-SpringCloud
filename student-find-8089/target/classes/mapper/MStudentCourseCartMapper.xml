@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.org.mapper.MStudentCourseCartMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.org.entity.MStudentCourseCart">
+        <result column="stu_id" property="stuId"/>
+        <result column="cou_id" property="couId"/>
+        <result column="add_time" property="addTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        stu_id
+        , cou_id, add_time
+    </sql>
+
+    <select id="searchStudentCourseCart" parameterType="Long"
+            resultType="com.org.entity.vo.StudentCourseCartVO">
+        select mscc.*, mc.`name`, mc.integral, mc.picture
+        from m_student_course_cart mscc
+                 JOIN m_course mc
+                      ON mscc.cou_id = mc.id
+        WHERE mscc.stu_id = #{userId}
+        order by add_time desc
+         limit #{start}
+            , #{end}
+    </select>
+
+</mapper>
+
