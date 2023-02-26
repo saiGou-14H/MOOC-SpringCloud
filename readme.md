@@ -2,7 +2,7 @@
 
 ## 相关项目
 
-- [MOOC](https://github.com/saiGou-14H/MOOC-SpringCloud)
+- [MOOC](https://github.com/saiGou-14H/MOOC)
 
 - [MOOC-Vue-Admin-Template](https://github.com/saiGou-14H/MOOC-Vue-Admin-Template)
 
